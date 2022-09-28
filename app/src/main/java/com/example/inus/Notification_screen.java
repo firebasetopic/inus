@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.inus.adapter.noneAdapter;
+import com.example.inus.model.docobject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,20 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.Value;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-public class None_screen extends AppCompatActivity {
+public class Notification_screen extends AppCompatActivity {
     private BottomNavigationView navigation;
-    private noneAdapter noneAdapter;
+    private com.example.inus.adapter.noneAdapter noneAdapter;
     private Button group,groupbuy;
     private ImageView rigthicon;
     private RecyclerView recyclerView;
@@ -44,7 +37,7 @@ public class None_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_none_screen);
+        setContentView(R.layout.activity_notification_screen);
         getSupportActionBar().hide();//隱藏上方導覽列
         getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
         navigation= findViewById(R.id.navigation);
@@ -68,9 +61,9 @@ public class None_screen extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
                                 docobject n = doc.toObject(docobject.class);
                                 glist.add(n.name);
-                                noneAdapter = new noneAdapter(None_screen.this,glist,Tpye);
+                                noneAdapter = new noneAdapter(Notification_screen.this,glist,Tpye);
                             }
-                            recyclerView.setLayoutManager(new LinearLayoutManager(None_screen.this));
+                            recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
                             recyclerView.setAdapter(noneAdapter);
                         }
                     }
@@ -98,9 +91,9 @@ public class None_screen extends AppCompatActivity {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
                                         docobject n = doc.toObject(docobject.class);
                                         glist.add(n.name);
-                                        noneAdapter = new noneAdapter(None_screen.this,glist,Tpye);
+                                        noneAdapter = new noneAdapter(Notification_screen.this,glist,Tpye);
                                     }
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(None_screen.this));
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
                                     recyclerView.setAdapter(noneAdapter);
                                 }
                             }
@@ -123,9 +116,9 @@ public class None_screen extends AppCompatActivity {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
                                         docobject n = doc.toObject(docobject.class);
                                         glist.add(n.name);
-                                        noneAdapter = new noneAdapter(None_screen.this,glist,Tpye);
+                                        noneAdapter = new noneAdapter(Notification_screen.this,glist,Tpye);
                                     }
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(None_screen.this));
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
                                     recyclerView.setAdapter(noneAdapter);
                                 }
                             }

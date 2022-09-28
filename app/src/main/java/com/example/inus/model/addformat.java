@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.model;
 
 import java.io.Serializable;
 

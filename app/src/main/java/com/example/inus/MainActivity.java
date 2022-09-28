@@ -24,23 +24,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView register,password_forgot,erroraccount,errorpassword;
-    private EditText account,password;
+    private TextView register, password_forgot, erroraccount, errorpassword;
+    private EditText account, password;
     private Dialog dialog;
     private Button login;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();// 隱藏上方導覽列
         getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
-        register =findViewById(R.id.register);
+        register = findViewById(R.id.register);
         password_forgot = findViewById(R.id.passwordforgot);
         account = findViewById(R.id.account);
-        password =findViewById(R.id.password);
+        password = findViewById(R.id.password);
         erroraccount = findViewById(R.id.erroraccount);
-        errorpassword =findViewById(R.id.errorpassword);
+        errorpassword = findViewById(R.id.errorpassword);
         login = findViewById(R.id.login);
         mAuth = FirebaseAuth.getInstance();
         dialog = new Dialog(this);
@@ -170,4 +171,5 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.show();
     }
+
 }

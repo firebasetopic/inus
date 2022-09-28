@@ -22,8 +22,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.inus.adapter.shopAdapter;
+import com.example.inus.adapter.shopcartAdapter;
+import com.example.inus.model.addformat;
+import com.example.inus.model.docobject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,25 +39,18 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Shop_screen extends AppCompatActivity {
     private BottomNavigationView navigation;
     private Button shop_cart,shop_post,post_add;
     private ImageView rigthicon;
     private RecyclerView recyclerView;
-    private shopAdapter shopAdapter;
-    private shopcartAdapter shopcartAdapter;
+    private com.example.inus.adapter.shopAdapter shopAdapter;
+    private com.example.inus.adapter.shopcartAdapter shopcartAdapter;
     private Dialog adddialog,suredialog,dialog;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -195,7 +191,7 @@ public class Shop_screen extends AppCompatActivity {
                     case R.id.talk:
                         return true;
                     case R.id.none:
-                        startActivity(new Intent(getApplicationContext(),None_screen.class));
+                        startActivity(new Intent(getApplicationContext(), Notification_screen.class));
                         overridePendingTransition(0,0);
                         return true;
 

@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.model;
 
 public class docobject {
     public String name;

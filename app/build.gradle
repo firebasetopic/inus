@@ -6,6 +6,10 @@ plugins {
 android {
     compileSdk 32
 
+    viewBinding {
+        enabled =true
+    }
+
     defaultConfig {
         applicationId "com.example.inus"
         minSdk 30
@@ -43,4 +47,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    implementation 'com.github.tibolte:agendacalendarview:1.0.4' //agenda view
 }

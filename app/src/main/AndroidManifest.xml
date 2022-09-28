@@ -10,10 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.揪inus">
         <activity
+            android:name="._finishEvent"
+            android:exported="false" />
+        <activity
+            android:name="._timePicker"
+            android:exported="false" />
+        <activity
+            android:name="._pickerfriends"
+            android:exported="false" />
+        <activity
+            android:name="._group"
+            android:exported="false" />
+        <activity
+            android:name="._addEvent"
+            android:exported="false" />
+        <activity
             android:name=".setting"
             android:exported="true" />
         <activity
-            android:name=".None_screen"
+            android:name=".Notification_screen"
             android:exported="true" />
         <activity
             android:name=".Talk_screen"

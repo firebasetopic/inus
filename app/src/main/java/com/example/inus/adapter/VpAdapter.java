@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.inus.R;
+import com.example.inus.Viewpageitem;
 
 import java.util.ArrayList;
 

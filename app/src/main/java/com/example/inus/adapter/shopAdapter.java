@@ -1,11 +1,9 @@
-package com.example.inus;
+package com.example.inus.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +12,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.inus.R;
+import com.example.inus.Viewpageitem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -42,7 +37,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private StorageReference storageReference= FirebaseStorage.getInstance().getReference();
-    private postjoinAdapter postjoinAdapter;
+    private com.example.inus.adapter.postjoinAdapter postjoinAdapter;
     ArrayList<String> nameLiset,articleList,titlelist,endtimelist,id;
     ArrayList<Viewpageitem> viewpageitemArrayList;
     public shopAdapter(Context context,ArrayList<String>nameLiset,ArrayList<String>articleList,ArrayList<String>titlelist,ArrayList<String>endtimelist,ArrayList<String>id) {

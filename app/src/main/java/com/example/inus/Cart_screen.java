@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.inus.adapter.cartAdapter;
+import com.example.inus.model.docobject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +35,7 @@ public class Cart_screen extends AppCompatActivity {
     private ImageView rigthicon;
     private RecyclerView recyclerView;
     private TextView name;
-    private cartAdapter cartAdapter;
+    private com.example.inus.adapter.cartAdapter cartAdapter;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     int Tpye;
@@ -168,7 +170,7 @@ public class Cart_screen extends AppCompatActivity {
                     case R.id.talk:
                         return true;
                     case R.id.none:
-                        startActivity(new Intent(getApplicationContext(),None_screen.class));
+                        startActivity(new Intent(getApplicationContext(), Notification_screen.class));
                         overridePendingTransition(0,0);
                         return true;
 
