@@ -38,8 +38,10 @@
         android:id="@+id/magenda_calendar_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/re"
         android:layout_above="@+id/navigation"
+        android:layout_below="@+id/re"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         agendaCalendar:agendaCurrentDayTextColor="@color/theme_primary"
         agendaCalendar:calendarColor="@color/theme_primary"
         agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
@@ -57,8 +59,8 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="30sp"
             android:layout_marginBottom="30sp"
-            android:src="@drawable/ic_add"
-            android:backgroundTint="@color/theme1"/>
+            android:backgroundTint="@color/theme1"
+            android:src="@drawable/ic_add" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabGroup"
@@ -69,9 +71,8 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="30sp"
             android:layout_marginBottom="90sp"
-            android:src="@drawable/ic_baseline_group_add_24"
             android:backgroundTint="@color/theme1"
-            />
+            android:src="@drawable/ic_baseline_group_add_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddEvent"
@@ -80,9 +81,8 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="30sp"
             android:layout_marginBottom="150sp"
-            android:src="@drawable/ic_baseline_person_add_24"
             android:backgroundTint="@color/theme1"
-            />
+            android:src="@drawable/ic_baseline_person_add_24" />
 
 
     </com.github.tibolte.agendacalendarview.AgendaCalendarView>

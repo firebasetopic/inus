@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.inus.adapter.shopAdapter;
@@ -48,6 +49,7 @@ public class Shop_screen extends AppCompatActivity {
     private BottomNavigationView navigation;
     private Button shop_cart,shop_post,post_add;
     private ImageView rigthicon;
+    private RelativeLayout relativeLayout1;
     private RecyclerView recyclerView;
     private com.example.inus.adapter.shopAdapter shopAdapter;
     private com.example.inus.adapter.shopcartAdapter shopcartAdapter;
@@ -68,6 +70,7 @@ public class Shop_screen extends AppCompatActivity {
         shop_cart = findViewById(R.id.shop_cart);
         shop_post = findViewById(R.id.shop_post);
         post_add =findViewById(R.id.post_add);
+        relativeLayout1 = findViewById(R.id.recyclerView1);
         recyclerView = findViewById(R.id.recyclerView);
         adddialog = new Dialog(this);
         suredialog = new Dialog(this);
@@ -80,6 +83,12 @@ public class Shop_screen extends AppCompatActivity {
         ArrayList<String> titlelist = new ArrayList<>();
         ArrayList<String> endtimelist= new ArrayList<>();
         ArrayList<String> id = new ArrayList<>();
+       relativeLayout1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               recyclerView.smoothScrollToPosition(0);
+           }
+       });
         db.collection("post")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

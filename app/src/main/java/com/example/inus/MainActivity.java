@@ -43,66 +43,76 @@ public class MainActivity extends AppCompatActivity {
         erroraccount = findViewById(R.id.erroraccount);
         errorpassword = findViewById(R.id.errorpassword);
         login = findViewById(R.id.login);
-        mAuth = FirebaseAuth.getInstance();
+        try {
+            mAuth = FirebaseAuth.getInstance();
+        }catch (Exception e)
+        {
+            Log.d("error", e.getMessage());
+        }
         dialog = new Dialog(this);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ac = account.getText().toString();//取得帳號
-                String pw = password.getText().toString();//取得密碼
-                if (TextUtils.isEmpty(ac) == false){           //是否有輸入帳號
-                    if(TextUtils.isEmpty(pw) == false){       //是否有輸入密碼
-                        mAuth.signInWithEmailAndPassword(ac, pw) //抓取資料庫帳密
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {  //核對帳密
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            Intent it = new Intent();
-                                            it.setClass(MainActivity.this,Home_screen.class);
-                                            startActivity(it);
-                                        }
-                                    }
-                                })
-                                //錯誤代碼分別對應的意思
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        switch (e.getMessage()) {
-                                            case "The email address is badly formatted.":
-                                                Toast.makeText(MainActivity.this, "Email格式錯誤", Toast.LENGTH_LONG).show();
-                                                break;
-                                            case "The password is invalid or the user does not have a password.":
-                                                Toast.makeText(MainActivity.this, "密碼錯誤", Toast.LENGTH_LONG).show();
-                                                break;
-                                            case "There is no user record corresponding to this identifier. The user may have been deleted.":
-                                                Toast.makeText(MainActivity.this, "無此用戶", Toast.LENGTH_LONG).show();
-                                                break;
-                                        }
+        try {
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                                    }
-                                });
+                    String ac = account.getText().toString();//取得帳號
+                    String pw = password.getText().toString();//取得密碼
+                    if (TextUtils.isEmpty(ac) == false) {           //是否有輸入帳號
+                        if (TextUtils.isEmpty(pw) == false) {       //是否有輸入密碼
+                            mAuth.signInWithEmailAndPassword(ac, pw) //抓取資料庫帳密
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {  //核對帳密
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                Intent it = new Intent();
+                                                it.setClass(MainActivity.this, Home_screen.class);
+                                                startActivity(it);
+                                            }
+                                        }
+                                    })
+                                    //錯誤代碼分別對應的意思
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            switch (e.getMessage()) {
+                                                case "The email address is badly formatted.":
+                                                    Toast.makeText(MainActivity.this, "Email格式錯誤", Toast.LENGTH_LONG).show();
+                                                    break;
+                                                case "The password is invalid or the user does not have a password.":
+                                                    Toast.makeText(MainActivity.this, "密碼錯誤", Toast.LENGTH_LONG).show();
+                                                    break;
+                                                case "There is no user record corresponding to this identifier. The user may have been deleted.":
+                                                    Toast.makeText(MainActivity.this, "無此用戶", Toast.LENGTH_LONG).show();
+                                                    break;
+                                            }
+
+                                        }
+                                    });
+                        }
+                    }
+                    //判斷是否有輸入帳密
+                    if (TextUtils.isEmpty(pw) && TextUtils.isEmpty(ac)) {
+                        erroraccount.setText("輸入帳號");
+                        errorpassword.setText("輸入密碼");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(pw)) {
+                        erroraccount.setText(" ");
+                        errorpassword.setText("輸入密碼");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(ac)) {
+                        erroraccount.setText("輸入帳號");
+                        errorpassword.setText(" ");
+                        return;
                     }
                 }
-                //判斷是否有輸入帳密
-                if(TextUtils.isEmpty(pw)&&TextUtils.isEmpty(ac))
-                {
-                    erroraccount.setText("輸入帳號");
-                    errorpassword.setText("輸入密碼");
-                    return;
-                }
-                if (TextUtils.isEmpty(pw)) {
-                    erroraccount.setText(" ");
-                    errorpassword.setText("輸入密碼");
-                    return;
-                }
-                if (TextUtils.isEmpty(ac)) {
-                    erroraccount.setText("輸入帳號");
-                    errorpassword.setText(" ");
-                    return;
-                }
-            }
-        });
+            });
+        }catch (Exception e){
+            Log.d("error" ,e.getMessage());
+        }
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

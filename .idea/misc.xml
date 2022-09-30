@@ -3,37 +3,36 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/drawable-v24/blue_border_rounded_cornwe.xml" value="0.378125" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/drawable-v24/ic_add.xml" value="0.378125" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/drawable-v24/ic_baseline_event_24.xml" value="0.378125" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/drawable-v24/shape.xml" value="0.378125" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/drawable/select_btn_color.xml" value="0.378125" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/drawable/settings.xml" value="0.378125" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_add_event.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_cart_screen.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_finish_event.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_group.xml" value="0.33" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_home_screen.xml" value="0.33" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_main.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_none_screen.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_pickerfriends.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/activity_time_picker.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/fripickeritem.xml" value="0.20208333333333334" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/timepickeritem.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/view_agenda_drawable_event.xml" value="0.27943840579710144" />
-        <entry key="..\:/AndroidStudioProjects/inus/app/src/main/res/layout/viewpage.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable-v24/blue_border_rounded_cornwe.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable-v24/cursor_color.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable-v24/home_selector.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable-v24/none_selector.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable-v24/theme2_fill__button_color.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/authentication.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/back_ios.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/friends_list.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/icon_close.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/illustrate.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/image_round.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/moretop.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/notice_border.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/report_problem.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/select_btn_color.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/drawable/settingperson.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_home_screen.xml" value="0.2046875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_main.xml" value="0.3515625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_shop_screen.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/add_format.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/add_format_click.xml" value="0.2015625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/forgot_password.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/post_add.xml" value="0.2015625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/post_add_sure.xml" value="0.2015625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/post_join.xml" value="0.33" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/post_join_view.xml" value="0.2015625" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/shop_post.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/post_join_view.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/shop_post.xml" value="0.34782608695652173" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/shop_post_cart.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/view_agenda_drawable_event.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/layout/viewpage.xml" value="0.10009057971014493" />
         <entry key="..\:/Users/user/AndroidStudioProjects/inus2/app/src/main/res/menu/button_nav.xml" value="0.2046875" />
       </map>

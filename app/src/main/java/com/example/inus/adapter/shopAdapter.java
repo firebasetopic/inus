@@ -4,12 +4,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,15 +20,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.example.inus.R;
 import com.example.inus.Viewpageitem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -39,7 +45,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
     private StorageReference storageReference= FirebaseStorage.getInstance().getReference();
     private com.example.inus.adapter.postjoinAdapter postjoinAdapter;
     ArrayList<String> nameLiset,articleList,titlelist,endtimelist,id;
-    ArrayList<Viewpageitem> viewpageitemArrayList;
+//    ArrayList<Viewpageitem> viewpageitemArrayList;
     public shopAdapter(Context context,ArrayList<String>nameLiset,ArrayList<String>articleList,ArrayList<String>titlelist,ArrayList<String>endtimelist,ArrayList<String>id) {
         this.context = context;
         this.nameLiset=nameLiset;
@@ -62,18 +68,47 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
         holder.article.setText(articleList.get(position));
         holder.title.setText(titlelist.get(position));
         holder.time.setText(endtimelist.get(position));
-        int[] images = {R.drawable.none1,R.drawable.none};
-        viewpageitemArrayList = new ArrayList<>();
-        for(int i = 0;i<images.length;i++){
-            Viewpageitem viewpageitem = new Viewpageitem(images[i]);
-            viewpageitemArrayList.add(viewpageitem);
-        }
-        VpAdapter vpAdapter = new VpAdapter(viewpageitemArrayList);
-        holder.viewPager2.setAdapter(vpAdapter);
-        holder.viewPager2.setClipToPadding(false);
-        holder.viewPager2.setClipChildren(false);
-        holder.viewPager2.setOffscreenPageLimit(1);
-        holder.viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+        storageReference.child("post/"+posid).listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+                        for (StorageReference item  : listResult.getItems()) {
+                            item.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Log.d("Demo",uri.toString());
+                                            ImageView imageView = new ImageView(context);
+                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800,500);
+                                            imageView.setLayoutParams(params);
+                                            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                            Glide.with(context)
+                                                    .load(uri)
+                                                    .into(imageView);
+                                            holder.linear.addView(imageView);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("Demo",e.getMessage());
+                                        }
+                                    });
+                        }
+                    }
+                });
+//        int[] images = {R.drawable.none1,R.drawable.none};
+//        viewpageitemArrayList = new ArrayList<>();
+//        for(int i = 0;i<images.length;i++){
+//            Viewpageitem viewpageitem = new Viewpageitem(images[i]);
+//            viewpageitemArrayList.add(viewpageitem);
+//        }
+//        VpAdapter vpAdapter = new VpAdapter(viewpageitemArrayList);
+//        holder.viewPager2.setAdapter(vpAdapter);
+//        holder.viewPager2.setClipToPadding(false);
+//        holder.viewPager2.setClipChildren(false);
+//        holder.viewPager2.setOffscreenPageLimit(1);
+//        holder.viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
 //        db.collection("user/"+mAuth.getUid()+"/cart")
 //                .document(posid)
@@ -203,14 +238,16 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
         TextView name,title,article,time;
         Button button;
         ViewPager2 viewPager2;
+        LinearLayout linear;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             title = itemView.findViewById(R.id.title);
             article=itemView.findViewById(R.id.article);
             button= itemView.findViewById(R.id.button);
-            viewPager2 = itemView.findViewById(R.id.viewpager);
+//            viewPager2 = itemView.findViewById(R.id.viewpager);
             time = itemView.findViewById(R.id.time);
+            linear = itemView.findViewById(R.id.linear);
         }
     }
 }
