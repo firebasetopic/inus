@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();// 隱藏上方導覽列
-        getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
+        getSupportActionBar().hide(); //隱藏上方導覽列
+        getWindow().setStatusBarColor(this.getResources().getColor(R.color.black)); // 狀態列顏色
         register = findViewById(R.id.register);
         password_forgot = findViewById(R.id.passwordforgot);
         account = findViewById(R.id.account);
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                                     Toast.makeText(MainActivity.this, "無此用戶", Toast.LENGTH_LONG).show();
                                                     break;
                                             }
-
                                         }
                                     });
                         }
@@ -132,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(0,0);
         }
     }
+
     private void openpwforgotDialog(){
         dialog.setContentView(R.layout.forgot_password);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -181,5 +181,4 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
 }

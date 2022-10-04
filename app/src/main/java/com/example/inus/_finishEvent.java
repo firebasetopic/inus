@@ -19,9 +19,16 @@ public class _finishEvent extends AppCompatActivity {
         getSupportActionBar().hide();//隱藏上方導覽列
         getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
 
+        String title = getIntent().getStringExtra("title");
+        String location = getIntent().getStringExtra("location");
+        String description = getIntent().getStringExtra("description");
+
+        binding.textViewTitle.setText(title);
+        binding.textViewLocation.setText(location);
+
         binding.button5.setOnClickListener(view -> {
             startActivity(new Intent(this,Home_screen.class));
         });
-
     }
+
 }

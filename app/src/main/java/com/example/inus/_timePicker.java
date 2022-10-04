@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.inus.adapter.Timeadapter;
 import com.example.inus.databinding.ActivityTimePickerBinding;
@@ -30,49 +31,10 @@ public class _timePicker extends AppCompatActivity {
         getSupportActionBar().hide();//隱藏上方導覽列
         getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
 
-        List<String> items = new LinkedList<>();
+        List<String> items = new LinkedList<>();  // data source
 
-        binding.button6.setOnClickListener(v->{
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);      //取得現在的日期年月日
-            int month = calendar.get(Calendar.MONTH) ;
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int day) {
-
-                    int cMonth = month+1; // month value is [0:11] , so add 1
-
-                    String Mmonth = cMonth < 10 ? "0"+ cMonth : ""+ cMonth;  // (string)月份 = (數字)月份 if 小於十 則前面補0 :(else)  直接填入數字，以下天數、小時、分鐘都一樣寫法
-                    String Mday = day < 10 ? "0"+ day : ""+day;
-
-                    datetime = String.valueOf(year) + "-" + Mmonth  + "-" + Mday;
-                    binding.button6.setText(datetime);
-                }
-            }, year, month, day).show();
-        });
-
-        binding.button7.setOnClickListener(v->{
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);      //取得現在的日期年月日
-            int month = calendar.get(Calendar.MONTH) ;
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int day) {
-
-                    int cMonth = month+1; // month value is [0:11] , so add 1
-
-                    String Mmonth = cMonth < 10 ? "0"+ cMonth : ""+ cMonth;  // (string)月份 = (數字)月份 if 小於十 則前面補0 :(else)  直接填入數字，以下天數、小時、分鐘都一樣寫法
-                    String Mday = day < 10 ? "0"+ day : ""+day;
-
-                    datetime = String.valueOf(year) + "-" + Mmonth  + "-" + Mday;
-                    binding.button7.setText(datetime);
-                }
-            }, year, month, day).show();
-        });
+        binding.button6.setOnClickListener(clickListener);
+        binding.button7.setOnClickListener(clickListener);
 
         RecyclerView recyclerView = findViewById(R.id.recycleView_timepicker);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -85,14 +47,44 @@ public class _timePicker extends AppCompatActivity {
             adapter.notifyItemChanged(items.size()-1);
         });
 
-        binding.BtnAddTimepicker.setOnClickListener(view -> startActivity(new Intent(this,_finishEvent.class)));
+        // next page
+        binding.BtnAddTimepicker.setOnClickListener(view ->{
+            Intent it = new Intent(this,_finishEvent.class );
+            it.putExtras(getBundle(new Bundle()));
+            startActivity(it);
+        });
 
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);      //取得現在的日期年月日
+            int month = calendar.get(Calendar.MONTH) ;
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                    int cMonth = month+1; // month value is [0:11] st. ++
+                    datetime = "" + year + "/" + cMonth  + "/" + day;
+                    binding.button7.setText(datetime);
+                }
+            }, year, month, day).show();
 
         }
     };
+
+    private Bundle getBundle(Bundle bundle){
+        String title = getIntent().getStringExtra("title");
+        String location = getIntent().getStringExtra("location");
+        String description = getIntent().getStringExtra("description");
+
+        bundle.putString("title",title);
+        bundle.putString("location",location);
+        bundle.putString("description",description);
+
+        return bundle;
+    }
 }

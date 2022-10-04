@@ -80,7 +80,7 @@ public class Timeadapter extends  RecyclerView.Adapter<TimeVH>{
 class TimeVH extends RecyclerView.ViewHolder{
 
     TextView textView;
-    private Timeadapter tadapter;
+    Timeadapter tadapter;
 
     public TimeVH(@NonNull View itemView) {
         super(itemView);

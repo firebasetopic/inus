@@ -13,22 +13,34 @@
 
         <include layout="@layout/toolbar" />
 
+        <!--        頭像-->
         <FrameLayout
+            android:id="@+id/fr"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/login_background">
 
-            <ImageView
-                android:id="@+id/avatar"
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageProfile"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
                 android:background="@drawable/image_round"
                 android:scaleType="centerInside"
-                android:src="@drawable/person_white" />
+                android:src="@drawable/person_white"
+                app:riv_oval="true" />
+
+            <TextView
+                android:id="@+id/textAddImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
         </FrameLayout>
 
+        <!--        name -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +82,7 @@
             android:layout_marginRight="62dp"
             android:textColor="#f00" />
 
+        <!--        phone -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,7 +123,7 @@
             android:layout_marginRight="62dp"
             android:textColor="#f00" />
 
-
+        <!--Email-->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,7 +163,7 @@
             android:layout_marginLeft="110dp"
             android:layout_marginRight="62dp"
             android:textColor="#f00" />
-
+        <!--passwd-->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -192,6 +205,7 @@
             android:layout_marginRight="62dp"
             android:textColor="#f00" />
 
+        <!--        hobby -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -217,7 +231,7 @@
             android:layout_marginLeft="110dp"
             android:layout_marginRight="62dp"
             android:textColor="#f00" />
-
+        <!--Summit-->
         <Button
             android:id="@+id/userregister"
             android:layout_width="match_parent"

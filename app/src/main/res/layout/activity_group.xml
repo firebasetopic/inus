@@ -15,26 +15,26 @@ tools:context="._group">
     android:text="新增行程"
     android:textSize="36dp" />
 
-<EditText
-    android:id="@+id/edtext1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/textView"
-    android:ems="10"
-    android:hint="新增標題"
-    android:inputType="textPersonName"
-    android:paddingTop="30dp" />
+    <EditText
+        android:id="@+id/edtext1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:ems="10"
+        android:hint="標題"
+        android:inputType="textPersonName"
+        android:paddingTop="30dp" />
 
-<EditText
-    android:id="@+id/edtext2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/edtext1"
-    android:ems="10"
-    android:hint="地點(選填)"
-    android:inputType="textPersonName"
+    <EditText
+        android:id="@+id/edtext2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtext1"
+        android:ems="10"
+        android:hint="地點"
+        android:inputType="textPersonName"
 
-    android:paddingTop="30dp"/>
+        android:paddingTop="30dp" />
 
 <EditText
     android:id="@+id/edtext3"

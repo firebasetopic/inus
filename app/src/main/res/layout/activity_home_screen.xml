@@ -9,84 +9,168 @@
     tools:context=".Home_screen"
     tools:ignore="NamespaceTypo">
 
-    <!--xmlns:agendaCalendar get solution from github -->
+
+<!--title-->
     <RelativeLayout
-        android:id="@+id/re"
+        android:id="@+id/homeTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:background="@color/theme1"
-        android:padding="16dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/month"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp" />
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:textSize="28dp"
+            android:text=""
+            android:textColor="#ffffff" />
 
         <ImageView
-            android:id="@+id/righticon"
+            android:id="@+id/rightIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginLeft="330dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/settings" />
+
     </RelativeLayout>
 
+<!--    week-->
+    <LinearLayout
+        android:id="@+id/homeWeek"
+        android:layout_below="@+id/homeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:orientation="horizontal"
+        >
 
-    <!--xmlns:agendaCalendar get solution from github -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="日"
+            android:textColor="#444444"
+            />
 
-    <com.github.tibolte.agendacalendarview.AgendaCalendarView
-        android:id="@+id/magenda_calendar_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="一"
+            android:textColor="#444444"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="二"
+            android:textColor="#444444"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="三"
+            android:textColor="#444444"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="四"
+            android:textColor="#444444"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="五"
+            android:textColor="#444444"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="六"
+            android:textColor="#444444"
+            />
+
+    </LinearLayout>
+<!--    day-->
+    <com.codbking.calendar.CalendarLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_above="@+id/navigation"
-        android:layout_below="@+id/re"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
-        agendaCalendar:agendaCurrentDayTextColor="@color/theme_primary"
-        agendaCalendar:calendarColor="@color/theme_primary"
-        agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
-        agendaCalendar:calendarDayTextColor="@color/theme_text_icons"
-        agendaCalendar:calendarHeaderColor="@color/theme_primary_dark"
-        agendaCalendar:calendarPastDayTextColor="@color/theme_light_primary"
-        agendaCalendar:fabColor="@color/theme_accent">
+        android:layout_below="@+id/homeWeek"
+        android:layout_weight="1">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
+        <com.codbking.calendar.CalendarDateView
+            android:id="@+id/calendarDateView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="30sp"
-            android:layout_marginBottom="30sp"
-            android:backgroundTint="@color/theme1"
-            android:src="@drawable/ic_add" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="85dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="30sp"
-            android:layout_marginBottom="90sp"
-            android:backgroundTint="@color/theme1"
-            android:src="@drawable/ic_baseline_group_add_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAddEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="30sp"
-            android:layout_marginBottom="150sp"
-            android:backgroundTint="@color/theme1"
-            android:src="@drawable/ic_baseline_person_add_24" />
+            android:background="#ffffff" />
 
 
-    </com.github.tibolte.agendacalendarview.AgendaCalendarView>
+    </com.codbking.calendar.CalendarLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="65dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_add"
+        android:backgroundTint="@color/theme1"
+        app:fabSize="auto" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabGroup"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="120dp"
+        android:backgroundTint="@color/theme1"
+        android:src="@drawable/ic_baseline_group_add_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEvent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="175dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/theme1"
+        android:src="@drawable/ic_baseline_person_add_24" />
+<!--    bottom-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="395dp"

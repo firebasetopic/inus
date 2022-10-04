@@ -45,7 +45,7 @@
                 android:paddingLeft="17dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:text="4a890094@stust.edu.tw"
+                android:text="rex0jax0@gmail.com"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="13sp" />
 
@@ -82,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/icon"
                 android:background="@android:color/transparent"
-                android:text="zxc101589"
                 android:hint="密碼"
                 android:inputType="textPassword"
                 android:maxLength="15"
@@ -90,6 +89,7 @@
                 android:paddingLeft="17dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
+                android:text="rex0jax0"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="13sp" />
 
