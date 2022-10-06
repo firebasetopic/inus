@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.adapter;
 
 public class Viewpageitem {
     public int image;

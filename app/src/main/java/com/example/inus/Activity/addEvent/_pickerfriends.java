@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity.addEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.example.inus.R;
 import com.example.inus.adapter.Demoadapter;
 import com.example.inus.databinding.ActivityPickerfriendsBinding;
 

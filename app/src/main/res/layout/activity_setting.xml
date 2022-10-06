@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setting">
+    tools:context=".Activity.Setting.setting">
 
     <RelativeLayout
         android:id="@+id/re"
@@ -90,7 +90,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Add_friends"
+        android:id="@+id/add_friends"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:visibility="visible"
@@ -143,12 +143,13 @@
             app:layout_constraintStart_toStartOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/friends_list"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/Add_friends">
+        app:layout_constraintTop_toBottomOf="@+id/add_friends">
         <ImageView
             android:id="@+id/iv_edit_friends_list"
             android:layout_width="45dp"
@@ -360,7 +361,7 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/signout"
+        android:id="@+id/signOut"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:visibility="visible"

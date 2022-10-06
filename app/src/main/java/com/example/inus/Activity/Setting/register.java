@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity.Setting;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,17 +18,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.inus.R;
 import com.example.inus.databinding.ActivityRegisterBinding;
+import com.example.inus.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -118,15 +117,15 @@ public class register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful() && mAuth.getCurrentUser()!=null){
                             String UID = mAuth.getCurrentUser().getUid();
-                            user.put("account",ac);
-                            user.put("password",pwd);
-                            user.put("name",binding.rname.getText().toString());
+                            user.put(Constants.KEY_EMAIL,ac);
+                            user.put(Constants.KEY_PASSWORD,pwd);
+                            user.put(Constants.KEY_NAME,binding.rname.getText().toString());
                             user.put("phone",binding.rphone.getText().toString());
                             user.put("hobby",binding.rhobby.getText().toString());
-                            user.put("image",encodedImage);
+                            user.put(Constants.KEY_IMAGE,encodedImage);
 
-                            try{
-                                db.collection("user")
+                            try{  // 用UID 當doc field
+                                db.collection(Constants.KEY_COLLECTION_USERS)
                                         .document(UID)
                                         .set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -142,8 +141,17 @@ public class register extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        showToast(e.getMessage());
-                        Log.d("error", e.getMessage());
+                        switch (e.getMessage()) {
+                            case "The email address is badly formatted.":
+                                Toast.makeText(register.this, "Email格式錯誤", Toast.LENGTH_LONG).show();
+                                break;
+                            case "The given password is invalid. [ Password should be at least 6 characters ]":
+                                Toast.makeText(register.this, "密碼長度過短", Toast.LENGTH_LONG).show();
+                                break;
+                            case "The email address is already in use by another account.":
+                                Toast.makeText(register.this, "已有此用戶", Toast.LENGTH_LONG).show();
+                                break;
+                        }
                     }
                 });
     }

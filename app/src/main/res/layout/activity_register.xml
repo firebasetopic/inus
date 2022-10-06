@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register">
+    tools:context=".Activity.Setting.register">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +27,8 @@
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/image_round"
                 android:scaleType="centerInside"
+                android:background="@drawable/image_round"
                 android:src="@drawable/person_white"
                 app:riv_oval="true" />
 

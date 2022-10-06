@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class addformat implements Serializable {
     public String name;
     public String price;
+
     public addformat(){
     }
 

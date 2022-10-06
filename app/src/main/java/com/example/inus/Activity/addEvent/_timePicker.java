@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity.addEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
+import com.example.inus.R;
 import com.example.inus.adapter.Timeadapter;
 import com.example.inus.databinding.ActivityTimePickerBinding;
 

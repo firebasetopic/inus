@@ -1,10 +1,12 @@
-package com.example.inus;
+package com.example.inus.Activity.addEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.inus.Activity.Home_screen;
+import com.example.inus.R;
 import com.example.inus.databinding.ActivityFinishEventBinding;
 
 public class _finishEvent extends AppCompatActivity {
@@ -27,7 +29,7 @@ public class _finishEvent extends AppCompatActivity {
         binding.textViewLocation.setText(location);
 
         binding.button5.setOnClickListener(view -> {
-            startActivity(new Intent(this,Home_screen.class));
+            startActivity(new Intent(this, Home_screen.class));
         });
     }
 

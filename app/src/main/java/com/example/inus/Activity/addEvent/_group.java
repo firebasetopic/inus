@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity.addEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.inus.R;
 import com.example.inus.databinding.ActivityGroupBinding;
 
 public class _group extends AppCompatActivity {

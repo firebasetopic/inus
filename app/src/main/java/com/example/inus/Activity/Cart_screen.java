@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.inus.Activity.Setting.setting;
+import com.example.inus.R;
 import com.example.inus.adapter.cartAdapter;
 import com.example.inus.model.docobject;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -97,7 +99,7 @@ public class Cart_screen extends AppCompatActivity {
         rigthicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),setting.class));
+                startActivity(new Intent(getApplicationContext(), setting.class));
                 overridePendingTransition(0,0);
             }
         });
@@ -168,6 +170,8 @@ public class Cart_screen extends AppCompatActivity {
                     case R.id.cart:
                         return true;
                     case R.id.talk:
+                        startActivity(new Intent(getApplicationContext(),Talk_screen.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.none:
                         startActivity(new Intent(getApplicationContext(), Notification_screen.class));

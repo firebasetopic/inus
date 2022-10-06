@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.util;
 
 import java.time.LocalDate;
 

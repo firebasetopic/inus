@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inus.R;
-import com.example.inus.Viewpageitem;
 
 import java.util.ArrayList;
 
 public class VpAdapter extends RecyclerView.Adapter<VpAdapter.ViewHolder> {
+
     ArrayList<Viewpageitem> viewpageitemArrayList;
     public VpAdapter(ArrayList<Viewpageitem> viewpageitemArrayList){
         this.viewpageitemArrayList = viewpageitemArrayList;

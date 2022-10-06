@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.inus.Activity.Setting.setting;
+import com.example.inus.R;
 import com.example.inus.adapter.noneAdapter;
 import com.example.inus.model.docobject;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,7 +73,7 @@ public class Notification_screen extends AppCompatActivity {
         rigthicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),setting.class));
+                startActivity(new Intent(getApplicationContext(), setting.class));
                 overridePendingTransition(0,0);
             }
         });
@@ -143,9 +145,11 @@ public class Notification_screen extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.talk:
+                        startActivity(new Intent(getApplicationContext(),Talk_screen.class));
+                        overridePendingTransition(0,0);
                         return true;
-                    case R.id.none:
-                        return true;
+
+                    case R.id.none:return true;
                 }
                 return false;
             }

@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity.addEvent;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.inus.Activity.Home_screen;
+import com.example.inus.R;
 import com.example.inus.databinding.ActivityAddEventBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -48,7 +50,7 @@ public class _addEvent extends AppCompatActivity {
         });
         binding.textViewSt.setOnClickListener(view ->timepicker(view));
         binding.textViewEt.setOnClickListener(view ->timepicker(view));
-        binding.button.setOnClickListener(view -> startActivity(new Intent(this,Home_screen.class)));
+        binding.button.setOnClickListener(view -> startActivity(new Intent(this, Home_screen.class)));
         binding.button2.setOnClickListener(view -> {
             if(isValidInput()){
                 addEvent();

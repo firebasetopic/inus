@@ -8,47 +8,56 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-
-        android:theme="@style/Theme.揪inus">
+        android:theme="@style/Theme.揪inus"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name="._finishEvent"
+            android:name=".Activity.Setting.addFriend"
             android:exported="false" />
         <activity
-            android:name="._timePicker"
+            android:name=".Activity.Setting.ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.Setting.Friends_list"
             android:exported="false" />
         <activity
-            android:name="._pickerfriends"
+            android:name=".Activity.addEvent._finishEvent"
             android:exported="false" />
         <activity
-            android:name="._group"
+            android:name=".Activity.addEvent._timePicker"
             android:exported="false" />
         <activity
-            android:name="._addEvent"
+            android:name=".Activity.addEvent._pickerfriends"
             android:exported="false" />
         <activity
-            android:name=".setting"
+            android:name=".Activity.addEvent._group"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.addEvent._addEvent"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Setting.setting"
             android:exported="true" />
         <activity
-            android:name=".Notification_screen"
+            android:name=".Activity.Notification_screen"
             android:exported="true" />
         <activity
-            android:name=".Talk_screen"
+            android:name=".Activity.Talk_screen"
             android:exported="true" />
         <activity
-            android:name=".Cart_screen"
+            android:name=".Activity.Cart_screen"
             android:exported="true" />
         <activity
-            android:name=".Shop_screen"
+            android:name=".Activity.Shop_screen"
             android:exported="true" />
         <activity
-            android:name=".register"
+            android:name=".Activity.Setting.register"
             android:exported="true" />
         <activity
-            android:name=".Home_screen"
+            android:name=".Activity.Home_screen"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.Setting.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

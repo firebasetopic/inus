@@ -2,9 +2,6 @@ package com.example.inus.model;
 
 import android.util.Log;
 
-import com.example.inus.CalendarUtils;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Event {
@@ -15,7 +12,6 @@ public class Event {
         ArrayList<Event> events = new ArrayList<>();
 
         for(Event event : eventList){  // someday : selectDay
-            Log.d("date", event.getTitle()+ "----" + event.getDate() + "---" + date);
             if(event.getDate().equals(date)){
                 events.add(event);
             }

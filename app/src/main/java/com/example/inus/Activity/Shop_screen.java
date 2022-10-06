@@ -1,4 +1,4 @@
-package com.example.inus;
+package com.example.inus.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.inus.Activity.Setting.setting;
+import com.example.inus.R;
 import com.example.inus.adapter.shopAdapter;
 import com.example.inus.adapter.shopcartAdapter;
 import com.example.inus.model.addformat;
@@ -112,7 +114,7 @@ public class Shop_screen extends AppCompatActivity {
         rigthicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),setting.class));
+                startActivity(new Intent(getApplicationContext(), setting.class));
                 overridePendingTransition(0,0);
             }
         });
@@ -191,13 +193,16 @@ public class Shop_screen extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(),Home_screen.class));
                         overridePendingTransition(0,0);
                         return true;
-                    case R.id.shop:
-                        return true;
+
+                    case R.id.shop:return true;
+
                     case R.id.cart:
                         startActivity(new Intent(getApplicationContext(),Cart_screen.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.talk:
+                        startActivity(new Intent(getApplicationContext(),Talk_screen.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.none:
                         startActivity(new Intent(getApplicationContext(), Notification_screen.class));
