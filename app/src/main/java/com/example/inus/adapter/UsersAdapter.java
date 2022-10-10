@@ -51,7 +51,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
         UserViewHolder(ItemContainerUserBinding itemContainerUserBinding){
             super(itemContainerUserBinding.getRoot());
-            //enable viewBinding >> XML will be generated auto
+            //enable viewBinding(must named item_container_XX) >> XML will be generated auto
             binding = itemContainerUserBinding;
         }
         // from models users

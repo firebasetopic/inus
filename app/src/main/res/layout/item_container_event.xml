@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/eventCellTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/eventCellTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_toEndOf="@+id/eventCellTime"
+        android:text=""
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/eventCellInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_toEndOf="@+id/eventCellTime"
+        android:layout_below="@+id/eventCellTitle"
+        android:text=""
+        android:textSize="14dp"
+        android:textColor="@color/gray"
+        android:textStyle="italic" />
+
+</RelativeLayout>

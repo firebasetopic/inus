@@ -58,20 +58,18 @@
         android:id="@+id/textAvailability"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:background="#008000"
         android:layout_below="@id/re"
-        android:textColor="@color/white"
+        android:background="#008000"
         android:visibility="gone"
-        android:text="Online"
         android:gravity="center"
-        />
+        android:text="Online"
+        android:textColor="@color/white" />
 <!--    body-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/re"
+        android:layout_below="@+id/textAvailability"
         android:layout_above="@+id/layoutSend"
         android:layout_marginBottom="5dp"
         app:stackFromEnd="true"
@@ -116,10 +114,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="345dp"
-
+            android:layout_gravity="right"
             android:background="@drawable/background_chat_input"
-            android:padding="5dp"
             android:src="@drawable/ic_send"
             android:tint="@color/white" />
 

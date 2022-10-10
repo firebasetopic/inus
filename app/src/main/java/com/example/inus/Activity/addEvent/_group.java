@@ -1,36 +1,34 @@
 package com.example.inus.Activity.addEvent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.inus.R;
-import com.example.inus.databinding.ActivityGroupBinding;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class _group extends AppCompatActivity {
+import com.example.inus.Activity.Setting.BaseActivity;
+import com.example.inus.databinding.ActivityGroupBinding;
+import com.example.inus.util.Constants;
+import com.example.inus.util.PreferenceManager;
+
+public class _group extends BaseActivity {
 
     private ActivityGroupBinding binding;
+    private PreferenceManager preferenceManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityGroupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
-        getSupportActionBar().hide();//隱藏上方導覽列
-        getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
-
+        binding.button.setOnClickListener(view -> finish());
         binding.button5.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("title",binding.edtext1.getText().toString() );
-            bundle.putString("location",binding.edtext2.getText().toString() );
-            bundle.putString("description",binding.edtext3.getText().toString());
-
+            preferenceManager.putString(Constants.KEY_EVENT_TITLE,binding.edtext1.getText().toString());
+            preferenceManager.putString(Constants.KEY_EVENT_LOCATION,binding.edtext2.getText().toString());
+            preferenceManager.putString(Constants.KEY_EVENT_DESCRIPTION,binding.edtext2.getText().toString());
             if(isVaildInput()){
-                Intent it = new Intent(this, _pickerfriends.class );
-                it.putExtras(bundle);
-                startActivity(it);
+                startActivity(new Intent(this,_pickerfriends.class));
             }
         });
     }

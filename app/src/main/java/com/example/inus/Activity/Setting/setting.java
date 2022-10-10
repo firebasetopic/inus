@@ -1,18 +1,18 @@
 package com.example.inus.Activity.Setting;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.inus.Activity.Home_screen;
+import com.example.inus.Activity.addEvent._addEvent;
 import com.example.inus.R;
 import com.example.inus.databinding.ActivitySettingBinding;
 import com.example.inus.util.Constants;
 import com.example.inus.util.PreferenceManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -25,6 +25,7 @@ public class setting extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private PreferenceManager preferenceManager;
     private ActivitySettingBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,16 +33,14 @@ public class setting extends AppCompatActivity {
         setContentView(binding.getRoot());
         init();
         setListeners();
-
-
     }
+
     private void init(){
         getSupportActionBar().hide();//隱藏上方導覽列
         getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
 
         mAuth = FirebaseAuth.getInstance();
         preferenceManager = new PreferenceManager(getApplicationContext());
-
     }
 
     private void showToast(String message) {
@@ -51,7 +50,8 @@ public class setting extends AppCompatActivity {
     private void setListeners(){
 
         binding.lefticon.setOnClickListener(view -> finish()); // 回上頁
-        binding.addFriends.setOnClickListener(view -> startActivity(new Intent(this, addFriend.class)));  // 新增好友
+//        binding.addFriends.setOnClickListener(view -> startActivity(new Intent(this, _addFriends.class)));  // 新增好友
+        binding.addFriends.setOnClickListener(view -> startActivity(new Intent(this, AddToFriends.class)));
         binding.friendsList.setOnClickListener(view -> startActivity(new Intent(this,Friends_list.class)));  // 好友列表
         binding.authentication.setOnClickListener(view -> {
             if (mAuth.getCurrentUser().isEmailVerified() == false){
@@ -75,10 +75,6 @@ public class setting extends AppCompatActivity {
                         finish();
                     })
                     .addOnFailureListener(e -> showToast("unable to sign out"));
-//
-//            FirebaseAuth.getInstance().signOut();
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            overridePendingTransition(0,0);
         });  // 登出
     }
 

@@ -15,20 +15,31 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.inus.Activity.Home_screen;
+import com.example.inus.Activity.Setting.BaseActivity;
 import com.example.inus.R;
 import com.example.inus.databinding.ActivityAddEventBinding;
+import com.example.inus.util.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
+import java.security.PrivateKey;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-public class _addEvent extends AppCompatActivity {
+public class _addEvent extends BaseActivity {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ActivityAddEventBinding binding;
-    private boolean isSelect=false;
-    String datetime ="";
-    String datetimeBefore ="";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+    private String UID;
+    private Calendar calendar = Calendar.getInstance();
+    private Date date, beforeDate;
+    private boolean allday =false;
     private int Rmwhich = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,27 +47,31 @@ public class _addEvent extends AppCompatActivity {
         binding =ActivityAddEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().hide();//隱藏上方導覽列
-        getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
+        mAuth = FirebaseAuth.getInstance();
+        UID =mAuth.getCurrentUser().getUid();
+        setListener();
 
+    }
+
+    private void setListener(){
         binding.switch1.setOnClickListener(view -> {
-            if(!isSelect){
+            if(!allday){
                 binding.textViewEt.setVisibility(View.GONE);
-                isSelect= true;
+                allday= true;
             }else {
                 binding.textViewEt.setVisibility(View.VISIBLE);
-                isSelect =false;
+                allday =false;
             }
         });
         binding.textViewSt.setOnClickListener(view ->timepicker(view));
         binding.textViewEt.setOnClickListener(view ->timepicker(view));
-        binding.button.setOnClickListener(view -> startActivity(new Intent(this, Home_screen.class)));
+        binding.button.setOnClickListener(view -> startActivity(new Intent(this, Home_screen.class)));  // cancel
         binding.button2.setOnClickListener(view -> {
             if(isValidInput()){
                 addEvent();
                 startActivity(new Intent(this,Home_screen.class));
             }
-        });
+        });  // setEvent
         binding.textViewRm.setOnClickListener(v->{
             String[] strings={"一小時前","三小時前","一天前"};
 
@@ -70,38 +85,36 @@ public class _addEvent extends AppCompatActivity {
                 }
             });
             builder.show();
-        });
+        });  // 提醒
     }
 
     public void timepicker(View v) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);      //取得現在的日期年月日
+        int year = calendar.get(Calendar.YEAR);      //取得所選的日期年月日
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hourOfDay = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
+        SimpleDateFormat SDF = new SimpleDateFormat("yyyy/MM/dd HH:mm");   //設定日期格式
 
         new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-
-                int cMonth = month+1; // month value is [0:11] , so add 1
-                datetime = "" + year  + "/" + cMonth  + "/" + day;
-
+            public void onDateSet(DatePicker view, int iyear, int imonth, int iday) {
                 new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        datetime += " " + hourOfDay + ":" + minute;
+                    public void onTimeSet(TimePicker view, int ihourOfDay, int iminute) {
+
+                        calendar = new GregorianCalendar(iyear,imonth,iday,ihourOfDay,iminute);
+                        date = calendar.getTime();
 
                         if(v == binding.textViewSt){
-                            datetimeBefore = datetime;
-                            binding.textViewSt.setText(datetimeBefore);
-                        }else {
-                            if(datetime.compareTo(datetimeBefore) <0 ){
-                                showToast("結束時間不能早於開始時間");
+                            binding.textViewSt.setText(SDF.format(date));
+                            beforeDate = date;
+                        }else{
+                            if(date.before(beforeDate)){
                                 binding.textViewEt.setText("");
-                            }else{
-                                binding.textViewEt.setText(datetime);
+                                showToast("結束時間不可早於開始時間");
+                            }else {
+                                binding.textViewEt.setText(SDF.format(date));
                             }
                         }
                     }
@@ -122,7 +135,7 @@ public class _addEvent extends AppCompatActivity {
         }else if(binding.textViewSt.getText().toString().isEmpty()){
             showToast("請輸入開始時間");
             return false;
-        }else if(binding.textViewEt.getText().toString().isEmpty()){
+        }else if(binding.textViewEt.getText().toString().isEmpty() && allday){
             showToast("請輸入結束時間");
             return false;
         }else if(binding.editText.getText().toString().isEmpty()){
@@ -137,20 +150,13 @@ public class _addEvent extends AppCompatActivity {
     }
 
     private void addEvent() {
-        HashMap<Object,String> data = new HashMap<>();
-        data.put("title",binding.edTextTitle.getText().toString());
-        data.put("startTime",binding.textViewSt.getText().toString());
-        data.put("endTime",binding.textViewEt.getText().toString());
-        data.put("location",binding.editText.getText().toString());
-        data.put("description",binding.editText2.getText().toString());
+        HashMap<String,Object> data = new HashMap<>();
+        data.put(Constants.KEY_EVENT_TITLE,binding.edTextTitle.getText().toString());
+        data.put(Constants.KEY_EVENT_START_TIME,beforeDate);
+        data.put(Constants.KEY_EVENT_END_TIME,date);
+        data.put(Constants.KEY_EVENT_LOCATION,binding.editText.getText().toString());
+        data.put(Constants.KEY_EVENT_DESCRIPTION, binding.editText2.getText().toString());
 
-        db.collection("joinData").document()
-                .set(data)
-                .addOnSuccessListener(v -> {
-                    Log.d("result","success");
-                })
-                .addOnFailureListener(v ->{
-                    Log.d("result","fail");
-                });
+        db.collection(Constants.KEY_COLLECTION_USERS + "/" + UID + "/event" ).document().set(data);
     }
 }

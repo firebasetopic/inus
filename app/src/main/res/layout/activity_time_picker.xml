@@ -15,31 +15,38 @@
         android:text="選擇時間"
         android:textSize="36dp" />
 
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/addTimepicker_start"
+        style="@style/Animation.Design.BottomSheetDialog"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
         android:layout_below="@id/TextViewPicker"
         android:layout_marginLeft="50dp"
         android:background="@drawable/select_btn_color"
+        android:textStyle="bold"
+        android:gravity="center"
         android:text="開始時間" />
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/addTimepicker_end"
+        style="@style/Animation.Design.BottomSheetDialog"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
         android:layout_below="@id/TextViewPicker"
-        android:layout_marginLeft="80dp"
-        android:layout_toRightOf="@+id/button6"
+        android:layout_marginLeft="50dp"
         android:background="@drawable/select_btn_color"
+        android:textStyle="bold"
+        android:gravity="center"
         android:text="結束時間" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_timepicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button7"
+        android:layout_below="@+id/addTimepicker_end"
         android:layout_marginTop="1dp" />
 
     <Button
@@ -54,6 +61,19 @@
 
 
     <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="9dp"
+        android:layout_toLeftOf="@id/Btn_addTimepicker"
+        android:layout_weight="1"
+        android:background="@drawable/select_btn_color"
+        android:text="回上頁" />
+
+    <Button
         android:id="@+id/Btn_addTimepicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,9 +81,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:textAlignment="center"
         android:background="@drawable/select_btn_color"
-        android:text="Next" />
+        android:text="送出"
+        android:textAlignment="center" />
 
 
 

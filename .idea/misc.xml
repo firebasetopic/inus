@@ -11,11 +11,14 @@
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/background_item_xiaomi.xml" value="0.378125" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/background_received_message.xml" value="0.378125" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.21203703703703702" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/ic_notifications.xml" value="0.378125" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/ic_send.xml" value="0.21203703703703702" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/image_round.xml" value="0.378125" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/drawable/img_location.xml" value="0.378125" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_add_event.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_add_friend.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_add_friends.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_add_to_friends.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_cart_screen.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_chat.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_finish_event.xml" value="0.3619791666666667" />
@@ -28,8 +31,10 @@
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_register.xml" value="0.24778761061946902" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_setting.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_shop_screen.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_talk_screen.xml" value="0.5" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_talk_screen.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/activity_time_picker.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/add_format.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/add_format_click.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/content_friends_list.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/event_cell.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/event_item.xml" value="0.33" />
@@ -37,15 +42,22 @@
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/fragment_first.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/fragment_second.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/fripickeritem.xml" value="0.3619791666666667" />
-        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_received_message.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_event.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_friends.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_received_message.xml" value="0.75" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_recent_conversion.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_result.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_sent_message.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_timepicker.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_container_user.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_event_error.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/item_xiaomi.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/noneadapter_view.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/post_add.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/post_add_sure.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/post_join.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/post_join_view.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/shop_post.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/shop_post_cart.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/success_register.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidStudioProjects/inus2/app/src/main/res/layout/timepickeritem.xml" value="0.3619791666666667" />

@@ -1,4 +1,4 @@
-package com.example.inus.adapter;
+package com.example.inus.adapter.Chat;
 
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;

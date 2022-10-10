@@ -10,20 +10,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.codbking.calendar.CaledarAdapter;
 import com.codbking.calendar.CalendarBean;
 import com.codbking.calendar.CalendarUtil;
 import com.codbking.calendar.CalendarView;
+import com.example.inus.Activity.Setting.BaseActivity;
 import com.example.inus.Activity.Setting.setting;
 import com.example.inus.Activity.addEvent._addEvent;
 import com.example.inus.Activity.addEvent._group;
-import com.example.inus.util.CalendarUtils;
 import com.example.inus.R;
-import com.example.inus.adapter.EventAdapter;
+import com.example.inus.adapter.Event.EventAdapter;
 import com.example.inus.databinding.ActivityHomeScreenBinding;
 import com.example.inus.model.Event;
 import com.example.inus.util.Constants;
@@ -42,7 +39,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Home_screen extends BaseActivity  {
+public class Home_screen extends BaseActivity {
 
     private ActivityHomeScreenBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,6 +47,7 @@ public class Home_screen extends BaseActivity  {
     private PreferenceManager preferenceManager;
     private boolean isOpen =false;  // for float btn
     Animation fabOpen , fabClose, rotateForward, rotateBackward;
+    private String UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +56,22 @@ public class Home_screen extends BaseActivity  {
         setContentView(binding.getRoot());
 
         init();
+        initList(Constants.selectDay);  // 登入時顯示
         initView();  // DB from initList
-        initList(CalendarUtils.selectDay);
         setListener();
         getToken();
     }
 
-    private void init(){
-        getSupportActionBar().hide();//隱藏上方導覽列
-        getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
-        mAuth = FirebaseAuth.getInstance();
-        preferenceManager = new PreferenceManager(getApplicationContext());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initList(Constants.selectDay);
+    }
 
+    private void init(){
+        mAuth = FirebaseAuth.getInstance();
+        UID = mAuth.getCurrentUser().getUid();
+        preferenceManager = new PreferenceManager(getApplicationContext());
         /* float button animation */
         binding.fabAddEvent.hide();
         binding.fabGroup.hide();
@@ -78,6 +80,7 @@ public class Home_screen extends BaseActivity  {
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
     }
+
     private void initView(){
         binding.calendarDateView.setAdapter(new CaledarAdapter() {
             @Override
@@ -96,7 +99,7 @@ public class Home_screen extends BaseActivity  {
                 } else {
                     text.setTextColor(0xff444444);
                 }
-                // 農曆
+                //農曆
 //                TextView chinaText = (TextView) view.findViewById(R.id.chinaText);
 //                chinaText.setText(calendarBean.chinaDay);
                 return view;
@@ -106,34 +109,44 @@ public class Home_screen extends BaseActivity  {
         binding.calendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int i, CalendarBean calendarBean) {
-                CalendarUtils.selectDay = calendarBean.year + "/" + calendarBean.moth +"/"
-                        + calendarBean.day;
-                binding.title.setText(CalendarUtils.selectDay);
-                initList(CalendarUtils.selectDay);
+
+                String moth,day;  // 補0
+                if(calendarBean.moth < 10){ moth = "0" + calendarBean.moth;
+                }else{ moth = "" + calendarBean.moth; }
+
+                if(calendarBean.day < 10){  day = "0" + calendarBean.day;
+                }else{ day = "" + calendarBean.day; }
+
+                Constants.selectDay = calendarBean.year + "-" + moth +"-" + day;
+                binding.title.setText(Constants.selectDay);
+                initList(Constants.selectDay);  // 點擊時顯示
             }
         });
 
+        // 顯示第一次title
         int[] data = CalendarUtil.getYMD(new Date());
-        binding.title.setText(data[0] + "/" +data[1] +"/" + data[2]);
+        binding.title.setText(data[0] + "-" +data[1] +"-" + data[2]);
     }
+
     /*calendar event */
     private void initList(String selectDay){
-        db.collection("joinData")
+
+        db.collection(Constants.KEY_COLLECTION_USERS + "/" + UID + "/event")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             Event.eventList.clear();  // 重新讀取時不會有上次紀錄
+
                             for(QueryDocumentSnapshot doc: task.getResult()) {
-                                Event event = new Event(doc.getString("title"), doc.getString("startTime"),
-                                        doc.getString("endTime"), doc.getString("description"), doc.getString("location"));
+                                Event event = new Event(doc.getString(Constants.KEY_EVENT_TITLE), doc.getDate(Constants.KEY_EVENT_START_TIME),
+                                        doc.getDate(Constants.KEY_EVENT_END_TIME), doc.getString(Constants.KEY_EVENT_LOCATION),doc.getString(Constants.KEY_EVENT_DESCRIPTION));
                                 Event.eventList.add(event);
 
                                 ArrayList<Event> dailyEvents = Event.eventForDate(selectDay);
                                 binding.list.setAdapter(new EventAdapter(getApplicationContext(),dailyEvents));
                             }
-
                         }
                     }
                 })
@@ -143,7 +156,6 @@ public class Home_screen extends BaseActivity  {
                         showToast(e.getMessage());
                     }
                 });
-
     }
 
     private void setListener(){
@@ -225,9 +237,8 @@ public class Home_screen extends BaseActivity  {
                 db.collection(Constants.KEY_COLLECTION_USERS).document(
                         preferenceManager.getString(Constants.KEY_USER_ID)
                 );
+
         documentReference.update(Constants.KEY_FCM_TOKEN,token);
-//                .addOnSuccessListener(unused -> showToast("Token update successfully"))
-//                .addOnFailureListener(e -> showToast("Unable to update token"));
     }
 
     private void showToast(String message){

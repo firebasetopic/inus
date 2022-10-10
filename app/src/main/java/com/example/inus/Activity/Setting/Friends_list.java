@@ -1,13 +1,11 @@
 package com.example.inus.Activity.Setting;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.inus.R;
 import com.example.inus.adapter.UsersAdapter;
@@ -17,6 +15,7 @@ import com.example.inus.model.User;
 import com.example.inus.util.Constants;
 import com.example.inus.util.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Friends_list extends AppCompatActivity implements UserListener {
+public class Friends_list extends BaseActivity implements UserListener {
 
     private FirebaseAuth mAuth;
     private ActivityFriendsListBinding binding;
@@ -38,8 +37,8 @@ public class Friends_list extends AppCompatActivity implements UserListener {
         super.onCreate(savedInstanceState);
         binding = ActivityFriendsListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         init();
-        preferenceManager = new PreferenceManager(getApplicationContext());
         setListeners();
         getUsers();
 
@@ -52,8 +51,7 @@ public class Friends_list extends AppCompatActivity implements UserListener {
     private void init(){
         mAuth = FirebaseAuth.getInstance();
         UID =mAuth.getCurrentUser().getUid();
-        getSupportActionBar().hide();//隱藏上方導覽列
-        getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
+        preferenceManager = new PreferenceManager(getApplicationContext());
     }
 
     private  void getUsers(){
@@ -61,27 +59,28 @@ public class Friends_list extends AppCompatActivity implements UserListener {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         ArrayList<String> friendID = new ArrayList<>();
 
+        // 讀取自己的好友清單
         db.collection(Constants.KEY_COLLECTION_USERS + "/" + UID + "/" + "friends")
                 .get()
                 .addOnCompleteListener(task -> {
                     for(QueryDocumentSnapshot doc : task.getResult()){
-                        Log.d("demo", doc.getId());
                         friendID.add(doc.getId());
                     }
                 });
 
+        // 把屬於好友的名單取出
         db.collection(Constants.KEY_COLLECTION_USERS)
                 .get()
                 .addOnCompleteListener(task -> {
                     loading(false);
                     String currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
-                    if(task.isSuccessful() && task.getResult() != null){
+                    if (task.isSuccessful() && task.getResult() != null) {
                         List<User> users = new ArrayList<>();
-                        for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                            if(currentUserId.equals(queryDocumentSnapshot.getId())){  // 跳過自己
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                            if (currentUserId.equals(queryDocumentSnapshot.getId())) {  // 跳過自己
                                 continue;
                             }
-                            if(friendID.contains(queryDocumentSnapshot.getId())){  // 篩選自己的好友
+                            if (friendID.contains(queryDocumentSnapshot.getId())) {  // 篩選自己的好友
                                 User user = new User();
                                 user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
                                 user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
@@ -91,8 +90,8 @@ public class Friends_list extends AppCompatActivity implements UserListener {
                                 users.add(user);
                             }
                         }
-                        if(users.size() > 0){
-                            UsersAdapter usersAdapter = new UsersAdapter(users,this);
+                        if (users.size() > 0) {
+                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
                             binding.usersRecycleView.setAdapter(usersAdapter);
                             binding.usersRecycleView.setVisibility(View.VISIBLE);
                         }

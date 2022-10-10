@@ -11,38 +11,39 @@
 
 
 <!--title-->
+
+
+    <!--    week-->
     <RelativeLayout
         android:id="@+id/homeTitle"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:background="@color/theme1"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:textSize="28dp"
             android:text=""
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/rightIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_marginLeft="330dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:src="@drawable/settings" />
 
     </RelativeLayout>
 
-<!--    week-->
     <LinearLayout
         android:id="@+id/homeWeek"
         android:layout_below="@+id/homeTitle"
@@ -132,21 +133,25 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff" />
+            android:background="#ffffff"
+            >
+        </ListView>
+
 
 
     </com.codbking.calendar.CalendarLayout>
 
+<!--  btn -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="65dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/ic_add"
+        android:layout_marginBottom="65dp"
         android:backgroundTint="@color/theme1"
+        android:src="@drawable/ic_add"
         app:fabSize="auto" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -166,8 +171,8 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="175dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="175dp"
         android:backgroundTint="@color/theme1"
         android:src="@drawable/ic_baseline_person_add_24" />
 <!--    bottom-->

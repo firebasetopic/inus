@@ -27,7 +27,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Editexfpicker"
+        android:visibility="gone"
         android:layout_marginTop="1dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="9dp"
+        android:layout_toLeftOf="@id/Btn_addfpicker"
+        android:layout_weight="1"
+        android:background="@drawable/select_btn_color"
+        android:text="回上頁" />
 
     <Button
         android:id="@+id/Btn_addfpicker"
@@ -38,6 +52,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/select_btn_color"
-        android:text="Next" />
+        android:text="送出" />
 
 </RelativeLayout>

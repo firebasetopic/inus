@@ -1,7 +1,5 @@
 package com.example.inus.Activity.Setting;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,19 +8,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.inus.R;
-import com.example.inus.adapter.ChatAdapter;
+import com.example.inus.adapter.Chat.ChatAdapter;
 import com.example.inus.databinding.ActivityChatBinding;
 import com.example.inus.model.ChatMessage;
 import com.example.inus.model.User;
+import com.example.inus.network.ApiClient;
+import com.example.inus.network.ApiService;
 import com.example.inus.util.Constants;
 import com.example.inus.util.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +37,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
-public class ChatActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ChatActivity extends BaseActivity {
 
     private ActivityChatBinding binding;
     private User receiverUser;
@@ -56,12 +64,9 @@ public class ChatActivity extends AppCompatActivity {
         loadReceiverDetails();  // 載入聊天者資訊
         init();  // 初始化
         listenMessages();  // 從DB中根據ID來讀資料
-
     }
-    private void init(){
 
-    getSupportActionBar().hide();//隱藏上方導覽列
-    getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
+    private void init(){
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(
@@ -73,124 +78,125 @@ public class ChatActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         UID =mAuth.getCurrentUser().getUid();
-
     }
-
     private void sendMessage(){
+        // 建立聊天訊息紀錄
         HashMap<String,Object> message = new HashMap<>();
         message.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_RECEIVER_ID,receiverUser.id);
         message.put(Constants.KEY_MESSAGE,binding.inputMessage.getText().toString());
         message.put(Constants.KEY_TIMESTAMP,new Date());
-
         db.collection(Constants.KEY_COLLECTION_CHAT).add(message);
-//        if(conversionId != null){
-//            updateConversion(binding.inputMessage.getText().toString());
-//        }else {
-//            HashMap<String, Object> conversion = new HashMap<>();
-//            conversion.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
-//            conversion.put(Constants.KEY_SENDER_NAME,preferenceManager.getString(Constants.KEY_NAME));
-//            conversion.put(Constants.KEY_SENDER_IMAGE,preferenceManager.getString(Constants.KEY_IMAGE));
-//            conversion.put(Constants.KEY_RECEIVER_ID,receiverUser.id);
-//            conversion.put(Constants.KEY_RECEIVER_NAME,receiverUser.name);
-//            conversion.put(Constants.KEY_RECEIVER_IMAGE,receiverUser.image);
-//            conversion.put(Constants.KEY_LAST_MESSAGE,binding.inputMessage.getText().toString());
-//            conversion.put(Constants.KEY_TIMESTAMP,new Date());
-//            addConversion(conversion);
-//        }
-//        if(!isReceiverAvailable){
-//            try{
-//                JSONArray tokens = new JSONArray();
-//                tokens.put(receiverUser.token);
-//
-//                JSONObject data = new JSONObject();
-//                data.put(Constants.KEY_USER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
-//                data.put(Constants.KEY_NAME,preferenceManager.getString(Constants.KEY_NAME));
-//                data.put(Constants.KEY_FCM_TOKEN,preferenceManager.getString(Constants.KEY_FCM_TOKEN));
-//                data.put(Constants.KEY_MESSAGE,binding.inputMessage.getText().toString());
-//
-//                JSONObject body = new JSONObject();
-//                body.put(Constants.REMOTE_MSG_DATA,data);
-//                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);
-//
-//                sendNotification(body.toString());
-//
-//            }catch (Exception e){
-//                showToash(e.getMessage());
-//            }
-//        }
+        // 建立最後一次對話紀錄
+        if(conversionId != null){
+            updateConversion(binding.inputMessage.getText().toString());
+        }else {
+            HashMap<String, Object> conversion = new HashMap<>();
+            conversion.put(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
+            conversion.put(Constants.KEY_SENDER_NAME,preferenceManager.getString(Constants.KEY_NAME));
+            conversion.put(Constants.KEY_SENDER_IMAGE,preferenceManager.getString(Constants.KEY_IMAGE));
+            conversion.put(Constants.KEY_RECEIVER_ID,receiverUser.id);
+            conversion.put(Constants.KEY_RECEIVER_NAME,receiverUser.name);
+            conversion.put(Constants.KEY_RECEIVER_IMAGE,receiverUser.image);
+            conversion.put(Constants.KEY_LAST_MESSAGE,binding.inputMessage.getText().toString());
+            conversion.put(Constants.KEY_TIMESTAMP,new Date());
+            addConversion(conversion);
+        }
+        //若非正在使用，則發送通知
+        if(!isReceiverAvailable){
+            try{
+                JSONArray tokens = new JSONArray();
+                tokens.put(receiverUser.token);
+
+                JSONObject data = new JSONObject();
+                data.put(Constants.KEY_USER_ID,preferenceManager.getString(Constants.KEY_USER_ID));
+                data.put(Constants.KEY_NAME,preferenceManager.getString(Constants.KEY_NAME));
+                data.put(Constants.KEY_FCM_TOKEN,preferenceManager.getString(Constants.KEY_FCM_TOKEN));
+                data.put(Constants.KEY_MESSAGE,binding.inputMessage.getText().toString());
+
+                JSONObject body = new JSONObject();
+                body.put(Constants.REMOTE_MSG_DATA,data);
+                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);
+
+                sendNotification(body.toString());
+                Log.d("demo",body.toString());
+
+            }catch (Exception e){
+                showToast(e.getMessage());
+            }
+        }
+        //送出訊息後，文字框清空
         binding.inputMessage.setText(null);
     }
-
-    private  void showToash(String message){
+    private  void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
-//    private void sendNotification(String messageBody){
-//        ApiClient.getClient().create(ApiService.class).setMessage(
-//                Constants.getRemoteMsgHeaders(),
-//                messageBody
-//        ).enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if(response.isSuccessful()){
-//                    try{
-//                        if(response.body() != null){
-//                            JSONObject responseJson = new JSONObject(response.body());
-//                            JSONArray results = responseJson.getJSONArray("results");
-//                            if(responseJson.getInt("failure") == 1){
-//                                JSONObject error = (JSONObject) results.get(0);
-//                                showToash(error.getString("error"));
-//                                return;
-//                            }
-//                        }
-//                    }catch (JSONException e){
-//                        e.printStackTrace();
-//                    }
-//                    showToash("Notification sent successfully");
-//                }else {
-//                    showToash("Error" + response.code());
-//                    Log.d("demo", ""+ response.code());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                showToash(t.getMessage());
-//            }
-//        });
-//
-//    }
+    private void sendNotification(String messageBody){
+        ApiClient.getClient().create(ApiService.class).setMessage(
+                Constants.getRemoteMsgHeaders(),
+                messageBody
+        ).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call,@NonNull Response<String> response) {
+                if(response.isSuccessful()){
+                    try{
+                        if(response.body() != null){
+                            JSONObject responseJson = new JSONObject(response.body());
+                            JSONArray results = responseJson.getJSONArray("results");
+                            if(responseJson.getInt("failure") == 1){
+                                JSONObject error = (JSONObject) results.get(0);
+                                showToast(error.getString("error"));
+                                return;
+                            }
+                        }
+                    }catch (JSONException e){
+                        showToast(e.getMessage());
+                        e.printStackTrace();
+                    }
+                    showToast("Notification sent successfully");
+                }else {
+                    showToast("Error" + response.code());
+                    Log.d("demo", ""+ response.code());
+                }
+            }
 
-//    private void listenerAvailabilityOfReceiver(){
-//        db.collection(Constants.KEY_COLLECTION_USERS).document(
-//                receiverUser.id
-//        ).addSnapshotListener(ChatActivity.this, ((value, error) -> {
-//            if(error != null){
-//                return;
-//            }
-//            if(value != null){
-//                if(value.getLong(Constants.KEY_AVAILABILITY) != null){
-//                    int availability = Objects.requireNonNull(
-//                            value.getLong(Constants.KEY_AVAILABILITY)
-//                    ).intValue();
-//                    isReceiverAvailable = availability == 1;
-//                }
-//                receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN);
-//                if(receiverUser.image == null){
-//                    receiverUser.image = value.getString(Constants.KEY_IMAGE);
-//                    chatAdapter.setReceiverProfileImage(getBitmapFromEncodeString(receiverUser.image));
-//                    chatAdapter.notifyItemRangeChanged(0, chatMessages.size());
-//                }
-//            }
-//            if(isReceiverAvailable){
-//                binding.textAvailability.setVisibility(View.VISIBLE);
-//            }else{
-//                binding.textAvailability.setVisibility(View.GONE);
-//            }
-//
-//
-//        }));
-//    }
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                showToast(t.getMessage());
+            }
+        });
+    }
+
+    private void listenerAvailabilityOfReceiver(){
+        db.collection(Constants.KEY_COLLECTION_USERS).document(
+                receiverUser.id
+        ).addSnapshotListener(ChatActivity.this, ((value, error) -> {
+            if(error != null){
+                return;
+            }
+            if(value != null){
+                if(value.getLong(Constants.KEY_AVAILABILITY) != null){
+                    int availability = Objects.requireNonNull(
+                            value.getLong(Constants.KEY_AVAILABILITY)
+                    ).intValue();
+                    isReceiverAvailable = availability == 1;
+                }
+                receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN);
+
+                if(receiverUser.image == null){
+                    receiverUser.image = value.getString(Constants.KEY_IMAGE);
+                    chatAdapter.setReceiverProfileImage(getBitmapFromEncodeString(receiverUser.image));
+                    chatAdapter.notifyItemRangeChanged(0, chatMessages.size());
+                }
+            if(isReceiverAvailable){
+                binding.textAvailability.setVisibility(View.VISIBLE);
+            }else {
+                binding.textAvailability.setVisibility(View.GONE);
+            }
+            }
+        }));
+    }
+
     private void listenMessages(){
         db.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
@@ -229,9 +235,9 @@ public class ChatActivity extends AppCompatActivity {
                 binding.chatRecyclerView.setVisibility(View.VISIBLE);
             }
             binding.progressBar.setVisibility(View.GONE);
-//            if(conversionId == null){
-//                chcekForConversion();
-//            }
+            if(conversionId == null){
+                chcekForConversion();
+            }
         }
     };
 
@@ -252,7 +258,6 @@ public class ChatActivity extends AppCompatActivity {
     private void setListeners(){
         binding.leftIcon.setOnClickListener(view -> onBackPressed());
         binding.layoutSend.setOnClickListener(view -> sendMessage());
-
     }
 
     private String getReadbleDateTime(Date date){
@@ -260,53 +265,53 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-//    private  void addConversion(HashMap<String, Object> conversion){
-//        db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
-//                .add(conversion)
-//                .addOnSuccessListener(documentReference -> conversionId = documentReference.getId());
-//    }
-//
-//    private void updateConversion(String message){
-//        DocumentReference documentReference =
-//                db.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(conversionId);
-//        documentReference.update(
-//                Constants.KEY_LAST_MESSAGE,message,
-//                Constants.KEY_TIMESTAMP, new Date()
-//        );
-//    }
-//
-//    private void chcekForConversion(){
-//        if(chatMessages.size() != 0){
-//            checkForConversionRemotely(
-//                    preferenceManager.getString(Constants.KEY_USER_ID),
-//                    receiverUser.id
-//            );
-//            checkForConversionRemotely(
-//                    receiverUser.id,
-//                    preferenceManager.getString(Constants.KEY_USER_ID)
-//            );
-//        }
-//    }
-//
-//    private void checkForConversionRemotely(String senderId, String receiverId){
-//        db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
-//                .whereEqualTo(Constants.KEY_SENDER_ID,senderId)
-//                .whereEqualTo(Constants.KEY_RECEIVER_ID,receiverId)
-//                .get()
-//                .addOnCompleteListener(conversationOnCompleteListener);
-//    }
-//
-//    private final OnCompleteListener<QuerySnapshot> conversationOnCompleteListener = task -> {
-//        if(task.isSuccessful() && task.getResult() !=null && task.getResult().getDocuments().size()>0){
-//            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-//            conversionId = documentSnapshot.getId();
-//        }
-//    };
-//
-//    @Override
-//    protected void onPostResume() {
-//        super.onPostResume();
-//        listenerAvailabilityOfReceiver();
-//    }
+    private  void addConversion(HashMap<String, Object> conversion){
+        db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                .add(conversion)
+                .addOnSuccessListener(documentReference -> conversionId = documentReference.getId());
+    }
+
+    private void updateConversion(String message){
+        DocumentReference documentReference =
+                db.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(conversionId);
+        documentReference.update(
+                Constants.KEY_LAST_MESSAGE,message,
+                Constants.KEY_TIMESTAMP, new Date()
+        );
+    }
+
+    private void chcekForConversion(){
+        if(chatMessages.size() != 0){
+            checkForConversionRemotely(
+                    preferenceManager.getString(Constants.KEY_USER_ID),
+                    receiverUser.id
+            );
+            checkForConversionRemotely(
+                    receiverUser.id,
+                    preferenceManager.getString(Constants.KEY_USER_ID)
+            );
+        }
+    }
+
+    private void checkForConversionRemotely(String senderId, String receiverId){
+        db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                .whereEqualTo(Constants.KEY_SENDER_ID,senderId)
+                .whereEqualTo(Constants.KEY_RECEIVER_ID,receiverId)
+                .get()
+                .addOnCompleteListener(conversationOnCompleteListener);
+    }
+
+    private final OnCompleteListener<QuerySnapshot> conversationOnCompleteListener = task -> {
+        if(task.isSuccessful() && task.getResult() !=null && task.getResult().getDocuments().size()>0){
+            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+            conversionId = documentSnapshot.getId();
+        }
+    };
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        listenerAvailabilityOfReceiver();
+    }
 
 }

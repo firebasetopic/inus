@@ -11,7 +11,7 @@
         android:theme="@style/Theme.揪inus"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.Setting.addFriend"
+            android:name=".Activity.Setting.AddToFriends"
             android:exported="false" />
         <activity
             android:name=".Activity.Setting.ChatActivity"
