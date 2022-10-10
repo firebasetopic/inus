@@ -19,16 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/addf_imag"
-            android:layout_width="104dp"
-            android:layout_height="98dp"
-            android:layout_marginStart="216dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blue_border_rounded_cornwe" />
-
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
@@ -40,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="46dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="35dp"
@@ -51,7 +41,7 @@
             <EditText
                 android:id="@+id/addf_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:hint="品名"
                 android:lines="1"
@@ -62,7 +52,7 @@
                 android:textSize="13sp" />
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="46dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="90dp"

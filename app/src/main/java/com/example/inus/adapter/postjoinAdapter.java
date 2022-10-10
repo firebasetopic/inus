@@ -1,22 +1,31 @@
 package com.example.inus.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.inus.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +36,7 @@ public class postjoinAdapter extends RecyclerView.Adapter<postjoinAdapter.MyView
     String posid;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    private StorageReference storageRef= FirebaseStorage.getInstance().getReference();
 
     public postjoinAdapter(Context context,ArrayList<String>itemname,ArrayList<String>itemprice,String posid) {
         this.context = context;
@@ -47,6 +57,24 @@ public class postjoinAdapter extends RecyclerView.Adapter<postjoinAdapter.MyView
         holder.post_item_name.setText(itemname.get(position));
         holder.post_item_price.setText(itemprice.get(position));
         HashMap<String,Object> TotalData =new HashMap<>();
+//        storageRef.child("postitem").listAll()
+//                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+//                    @Override
+//                    public void onSuccess(ListResult listResult) {
+//                        for (StorageReference item  : listResult.getItems()) {
+//                            Log.d("Demo",item.getName());
+//                            item.getDownloadUrl()
+//                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                        @Override
+//                                        public void onSuccess(Uri uri) {
+//                                                Glide.with(context)
+//                                                        .load(uri)
+//                                                        .into(holder.post_item_imageView);
+//                                        }
+//                                    });
+//                        }
+//                    }
+//                });
         db.collection("post")
                 .document(posid)
                 .get()
@@ -75,6 +103,8 @@ public class postjoinAdapter extends RecyclerView.Adapter<postjoinAdapter.MyView
                                             String s = String.valueOf(ss);
                                             String name = itemname.get(position);
                                             TotalData.put("total", s);
+                                            TotalData.put("item",holder.post_item_price.getText().toString());
+                                            TotalData.put("num",holder.count.getText().toString());
                                             db.collection("user/" + mAuth.getUid() + "/cart/"+posid+"/prices")
                                                     .document(name)
                                                     .set(TotalData)
@@ -102,6 +132,8 @@ public class postjoinAdapter extends RecyclerView.Adapter<postjoinAdapter.MyView
                                                 String s = String.valueOf(ss);
                                                 String name = itemname.get(position);
                                                 TotalData.put("total" , s);
+                                                TotalData.put("item",holder.post_item_price.getText().toString());
+                                                TotalData.put("num",holder.count.getText().toString());
                                                 db.collection("user/" + mAuth.getUid() + "/cart/"+posid+"/prices")
                                                         .document(name)
                                                         .set(TotalData)
@@ -110,6 +142,8 @@ public class postjoinAdapter extends RecyclerView.Adapter<postjoinAdapter.MyView
                                                             public void onSuccess(Void unused) {
                                                             }
                                                         });
+                                            }else{
+
                                             }
                                         }
                                     });
@@ -134,6 +168,7 @@ public class postjoinAdapter extends RecyclerView.Adapter<postjoinAdapter.MyView
             count = itemView.findViewById(R.id.count);
             padd = itemView.findViewById(R.id.padd);
             pv=itemView.findViewById(R.id.pv);
+
 
         }
     }

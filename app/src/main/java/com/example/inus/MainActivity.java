@@ -43,16 +43,8 @@ public class MainActivity extends AppCompatActivity {
         erroraccount = findViewById(R.id.erroraccount);
         errorpassword = findViewById(R.id.errorpassword);
         login = findViewById(R.id.login);
-        try {
-            mAuth = FirebaseAuth.getInstance();
-        }catch (Exception e)
-        {
-            Log.d("error", e.getMessage());
-        }
-        dialog = new Dialog(this);
-
-        try {
-            login.setOnClickListener(new View.OnClickListener() {
+        mAuth = FirebaseAuth.getInstance();
+        login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -109,9 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-        }catch (Exception e){
-            Log.d("error" ,e.getMessage());
-        }
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override

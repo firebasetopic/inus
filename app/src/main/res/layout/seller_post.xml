@@ -38,11 +38,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/add_imageView"
+                android:id="@+id/sell_imageView"
                 android:layout_width="94dp"
                 android:layout_height="99dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="40dp"
+
                 app:srcCompat="@drawable/blue_border_rounded_cornwe"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,15 +68,15 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
-                    android:id="@+id/add_title"
+                    android:id="@+id/sell_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:maxLines="1"
-                    android:paddingLeft="17dp"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
                     android:textAlignment="center"
+                    android:textColor="@color/black"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="13sp"
                     tools:layout_editor_absoluteX="4dp"
@@ -103,7 +104,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <Button
-                    android:id="@+id/add_hobby"
+                    android:id="@+id/sell_hobby"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -132,12 +133,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/add_format"
+                android:id="@+id/sell_format"
                 android:layout_width="330dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="316dp"
                 android:background="@drawable/select_btn_color"
-                android:text="新增商品規格"
+                android:text="修改規格"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -152,7 +153,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <Button
-                    android:id="@+id/add_endtime"
+                    android:id="@+id/sell_endtime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -171,11 +172,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
-                    android:id="@+id/add_art"
+                    android:id="@+id/sell_art"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:hint=""
+                    android:textColor="@color/black"
                     android:inputType="textMultiLine"
                     android:maxLength="1500"
                     android:paddingLeft="17dp"
@@ -188,15 +189,15 @@
             </RelativeLayout>
 
             <Button
+                android:id="@+id/sure"
                 android:layout_width="112dp"
                 android:layout_height="42dp"
-                android:layout_marginStart="220dp"
-                android:layout_marginTop="592dp"
+                android:layout_marginStart="116dp"
+                android:layout_marginTop="600dp"
                 android:background="@drawable/select_btn_color"
-                android:text="下一步"
+                android:text="確認"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/next"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

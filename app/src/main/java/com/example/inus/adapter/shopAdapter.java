@@ -77,9 +77,8 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            Log.d("Demo",uri.toString());
                                             ImageView imageView = new ImageView(context);
-                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800,500);
+                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800,400);
                                             imageView.setLayoutParams(params);
                                             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                                             Glide.with(context)
@@ -89,7 +88,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
-                                        @Override
+                                    @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.d("Demo",e.getMessage());
                                         }

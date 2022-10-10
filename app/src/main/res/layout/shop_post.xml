@@ -103,11 +103,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <HorizontalScrollView
-                android:layout_width="352dp"
+                android:layout_width="346dp"
                 android:layout_height="189dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="6dp"
                 android:layout_marginTop="4dp">
 
                 <LinearLayout
