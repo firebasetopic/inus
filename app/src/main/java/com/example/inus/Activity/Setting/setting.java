@@ -1,14 +1,11 @@
 package com.example.inus.Activity.Setting;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.inus.Activity.Home_screen;
-import com.example.inus.Activity.addEvent._addEvent;
 import com.example.inus.R;
 import com.example.inus.databinding.ActivitySettingBinding;
 import com.example.inus.util.Constants;
@@ -50,14 +47,15 @@ public class setting extends AppCompatActivity {
     private void setListeners(){
 
         binding.lefticon.setOnClickListener(view -> finish()); // 回上頁
-//        binding.addFriends.setOnClickListener(view -> startActivity(new Intent(this, _addFriends.class)));  // 新增好友
-        binding.addFriends.setOnClickListener(view -> startActivity(new Intent(this, AddToFriends.class)));
+        binding.personalInformationSettings.setOnClickListener(view -> startActivity(new Intent(this, personal_info.class)));
+        binding.addFriends.setOnClickListener(view -> startActivity(new Intent(this, AddToFriends.class)));// 新增好友
         binding.friendsList.setOnClickListener(view -> startActivity(new Intent(this,Friends_list.class)));  // 好友列表
         binding.authentication.setOnClickListener(view -> {
             if (mAuth.getCurrentUser().isEmailVerified() == false){
                 mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(task -> showToast("認證成功"));
             }
         }); //會員認證
+
 
         binding.signOut.setOnClickListener(view -> {
             showToast("Signing out");

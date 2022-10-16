@@ -17,7 +17,6 @@ import com.example.inus.network.ApiService;
 import com.example.inus.util.Constants;
 import com.example.inus.util.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,8 +52,6 @@ public class ChatActivity extends BaseActivity {
     private FirebaseFirestore db;
     private String conversionId =null;
     private Boolean isReceiverAvailable = false;
-    private FirebaseAuth mAuth;
-    private String UID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +63,7 @@ public class ChatActivity extends BaseActivity {
         listenMessages();  // 從DB中根據ID來讀資料
     }
 
+    // 初始化
     private void init(){
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
@@ -76,9 +74,8 @@ public class ChatActivity extends BaseActivity {
         );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        UID =mAuth.getCurrentUser().getUid();
     }
+    // 送出聊天內容，上傳DB且通知對方
     private void sendMessage(){
         // 建立聊天訊息紀錄
         HashMap<String,Object> message = new HashMap<>();
@@ -119,7 +116,6 @@ public class ChatActivity extends BaseActivity {
                 body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens);
 
                 sendNotification(body.toString());
-                Log.d("demo",body.toString());
 
             }catch (Exception e){
                 showToast(e.getMessage());
@@ -128,9 +124,11 @@ public class ChatActivity extends BaseActivity {
         //送出訊息後，文字框清空
         binding.inputMessage.setText(null);
     }
+    // showToast
     private  void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+    // 發送通知
     private void sendNotification(String messageBody){
         ApiClient.getClient().create(ApiService.class).setMessage(
                 Constants.getRemoteMsgHeaders(),
@@ -166,7 +164,7 @@ public class ChatActivity extends BaseActivity {
             }
         });
     }
-
+    // 及時顯示對方是否在線上
     private void listenerAvailabilityOfReceiver(){
         db.collection(Constants.KEY_COLLECTION_USERS).document(
                 receiverUser.id
@@ -196,7 +194,7 @@ public class ChatActivity extends BaseActivity {
             }
         }));
     }
-
+    // 汲取聊天內容
     private void listenMessages(){
         db.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
@@ -207,7 +205,7 @@ public class ChatActivity extends BaseActivity {
                 .whereEqualTo(Constants.KEY_RECEIVER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
                 .addSnapshotListener(eventListener);
     }
-
+    // DB 即時更新 聊天內容
     private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
         if(error != null){
             return;
@@ -240,7 +238,7 @@ public class ChatActivity extends BaseActivity {
             }
         }
     };
-
+    // image convert bytes, 以顯示頭像
     private Bitmap getBitmapFromEncodeString(String encodedImage) {
         if(encodedImage != null){
             byte[] bytes = Base64.decode(encodedImage,Base64.DEFAULT);
@@ -249,28 +247,27 @@ public class ChatActivity extends BaseActivity {
             return null;
         }
     }
-
+    // 載入USER資訊
     private void loadReceiverDetails(){
         receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
         binding.textname.setText(receiverUser.name);
     }
-
+    // btn 事件
     private void setListeners(){
         binding.leftIcon.setOnClickListener(view -> onBackPressed());
         binding.layoutSend.setOnClickListener(view -> sendMessage());
     }
-
+    // 設定時間格式
     private String getReadbleDateTime(Date date){
         return new SimpleDateFormat("yy/MM/dd HH:mm" , Locale.getDefault()).format(date);
     }
-
-
+    //把聯絡人寫入 conversion 中
     private  void addConversion(HashMap<String, Object> conversion){
         db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .add(conversion)
                 .addOnSuccessListener(documentReference -> conversionId = documentReference.getId());
     }
-
+    // 更新 Conversion 的資料
     private void updateConversion(String message){
         DocumentReference documentReference =
                 db.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(conversionId);
@@ -279,7 +276,7 @@ public class ChatActivity extends BaseActivity {
                 Constants.KEY_TIMESTAMP, new Date()
         );
     }
-
+    //  如果新增聊天內容，則寫入對話中
     private void chcekForConversion(){
         if(chatMessages.size() != 0){
             checkForConversionRemotely(
@@ -292,7 +289,7 @@ public class ChatActivity extends BaseActivity {
             );
         }
     }
-
+    // 寫入對話DB
     private void checkForConversionRemotely(String senderId, String receiverId){
         db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID,senderId)
@@ -300,14 +297,14 @@ public class ChatActivity extends BaseActivity {
                 .get()
                 .addOnCompleteListener(conversationOnCompleteListener);
     }
-
+    // 取得最新一筆對話紀錄跟聯絡人
     private final OnCompleteListener<QuerySnapshot> conversationOnCompleteListener = task -> {
         if(task.isSuccessful() && task.getResult() !=null && task.getResult().getDocuments().size()>0){
             DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
             conversionId = documentSnapshot.getId();
         }
     };
-
+    // 返回時顯示對方是否在線上
     @Override
     protected void onPostResume() {
         super.onPostResume();

@@ -49,11 +49,12 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
         binding = ActivityTalkScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-        loadUserDetails();  // 載入用戶的 name 跟 頭像
+        loadUserDetails();
         getToken();
         setListeners();
         listenConversation();
     }
+    // 初始化
     private void  init(){
         db =FirebaseFirestore.getInstance();
         conversations = new ArrayList<>();
@@ -61,7 +62,7 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
         binding.conversationsRecyclerView.setAdapter(conversationsAdapter);
         preferenceManager = new PreferenceManager(getApplicationContext());
     }
-
+    // btn 事件
     private void setListeners() {
         binding.rightIcon.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), setting.class));
@@ -97,7 +98,7 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
             }
         });
     }
-
+    // 載入對話內容
     private void listenConversation(){
         db.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
@@ -106,7 +107,7 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
                 .whereEqualTo(Constants.KEY_RECEIVER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
                 .addSnapshotListener(eventListener);
     }
-
+    // 及時更新對話訊息
     private final EventListener<QuerySnapshot> eventListener = ((value, error) -> {
         if(error != null){
             return;
@@ -150,10 +151,11 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
             binding.progressBar.setVisibility(View.GONE);
         }
     });
-
+    // 取得token
     private void getToken() {
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
     }
+    // 更新token
     private void updateToken(String token){
         preferenceManager.putString(Constants.KEY_FCM_TOKEN,token);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -165,7 +167,7 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
 //                .addOnSuccessListener(unused -> showToast("Token update successfully"))
                 .addOnFailureListener(e -> showToast("Unable to update token"));
     }
-
+    // 載入USER 資料
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadUserDetails(){
             binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
@@ -181,10 +183,11 @@ public class Talk_screen extends BaseActivity implements ConversionListener {
                 showToast(e.getMessage());
             }
     }
+    // showToast
     private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
-
+    // 點擊對話框之後進入聊天室
     @Override
     public void onConversionClicked(User user) {
         Intent it = new Intent(getApplicationContext(), ChatActivity.class);

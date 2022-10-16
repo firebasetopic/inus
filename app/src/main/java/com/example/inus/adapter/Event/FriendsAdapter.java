@@ -44,7 +44,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
     @Override
     public void onBindViewHolder(@NonNull FriendsViewHolder holder, int position) {
         holder.setData(users.get(position));
-        holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
 
         holder.itemView.setOnClickListener(view -> {
 

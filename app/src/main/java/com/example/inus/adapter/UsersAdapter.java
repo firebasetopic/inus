@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.inus.Activity.Setting.Friends_list;
 import com.example.inus.databinding.ItemContainerUserBinding;
 import com.example.inus.listeners.UserListener;
 import com.example.inus.model.User;

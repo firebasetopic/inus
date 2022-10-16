@@ -43,11 +43,9 @@ public class Home_screen extends BaseActivity {
 
     private ActivityHomeScreenBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
     private PreferenceManager preferenceManager;
     private boolean isOpen =false;  // for float btn
     Animation fabOpen , fabClose, rotateForward, rotateBackward;
-    private String UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +67,6 @@ public class Home_screen extends BaseActivity {
     }
 
     private void init(){
-        mAuth = FirebaseAuth.getInstance();
-        UID = mAuth.getCurrentUser().getUid();
         preferenceManager = new PreferenceManager(getApplicationContext());
         /* float button animation */
         binding.fabAddEvent.hide();
@@ -131,7 +127,7 @@ public class Home_screen extends BaseActivity {
     /*calendar event */
     private void initList(String selectDay){
 
-        db.collection(Constants.KEY_COLLECTION_USERS + "/" + UID + "/event")
+        db.collection(Constants.KEY_COLLECTION_USERS + "/" + Constants.UID + "/event")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

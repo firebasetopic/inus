@@ -12,6 +12,7 @@ import com.example.inus.Activity.Setting.BaseActivity;
 import com.example.inus.R;
 import com.example.inus.adapter.Event.FriendsAdapter;
 import com.example.inus.databinding.ActivityPickerfriendsBinding;
+import com.example.inus.listeners.Callback;
 import com.example.inus.model.User;
 import com.example.inus.util.Constants;
 import com.example.inus.util.PreferenceManager;
@@ -20,52 +21,47 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class _pickerfriends extends BaseActivity {
+public class _PickerFriends extends BaseActivity implements Callback {
 
     private ActivityPickerfriendsBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
     private PreferenceManager preferenceManager;
-    private String UID;
     FriendsAdapter friendsAdapter;
+    List<String> friendID = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPickerfriendsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        mAuth = FirebaseAuth.getInstance();
-        UID =mAuth.getCurrentUser().getUid();
         preferenceManager = new PreferenceManager(getApplicationContext());
         getFriends();
 
         binding.button.setOnClickListener(view -> finish());
         binding.BtnAddfpicker.setOnClickListener(view ->{
             try {
-                if (preferenceManager.getString(Constants.KEY_SELECTED_USERS).isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "請選擇好友", Toast.LENGTH_SHORT).show();
-                } else {
-                    startActivity(new Intent(this, _timePicker.class));
+                if (!preferenceManager.getString(Constants.KEY_SELECTED_USERS).isEmpty()) {
+                    startActivity(new Intent(this, _PickerTime.class));
                 }
             }catch (Exception e){
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "請選擇好友", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getFriends(){
-        ArrayList<String> friendID = new ArrayList<>();
-
         // 讀取好友資料
-        db.collection(Constants.KEY_COLLECTION_USERS + "/" + UID + "/" + "friends")
-                .get()
+        db.collection(Constants.KEY_COLLECTION_USERS).document(Constants.UID).get()
                 .addOnCompleteListener(task -> {
-                    for(QueryDocumentSnapshot doc : task.getResult()){
-                        friendID.add(doc.getId());
+                    if(task.isSuccessful()){
+                        List<String> s = (List<String>) task.getResult().get("friends");
+                        String friendIDStr = "" + s;
+                        responseCallback(friendIDStr);  //async
                     }
-            });
+                });
 
         //取出用戶中好友資料
         db.collection(Constants.KEY_COLLECTION_USERS)
@@ -98,5 +94,11 @@ public class _pickerfriends extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void responseCallback(String data) {
+        data = data.replaceAll("\\[" ,"").replaceAll("\\]" ,"").replaceAll(" ","");
+        friendID = new ArrayList<>(Arrays.asList(data.split(",")));
     }
 }

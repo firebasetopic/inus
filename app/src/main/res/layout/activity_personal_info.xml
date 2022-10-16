@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Setting.register">
+    tools:context=".Activity.Setting.personal_info">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,15 +20,14 @@
             android:layout_height="200dp"
             android:background="@drawable/login_background">
 
-
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageProfile"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
-                android:scaleType="centerInside"
                 android:background="@drawable/image_round"
+                android:scaleType="centerInside"
                 android:src="@drawable/person_white"
                 app:riv_oval="true" />
 
@@ -40,13 +39,13 @@
 
         </FrameLayout>
 
-        <!--        name -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="62dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="62dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/blue_border_rounded_cornwe">
 
             <EditText
@@ -74,21 +73,14 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/errorname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:layout_marginRight="62dp"
-            android:textColor="#f00" />
 
-        <!--        phone -->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="62dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="62dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/blue_border_rounded_cornwe">
 
             <EditText
@@ -115,96 +107,6 @@
                 android:src="@drawable/phone" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/errorphone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:layout_marginRight="62dp"
-            android:textColor="#f00" />
-
-        <!--Email-->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="62dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="62dp"
-            android:background="@drawable/blue_border_rounded_cornwe">
-
-            <EditText
-                android:id="@+id/raccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/username_icon2"
-                android:background="@android:color/transparent"
-                android:hint="帳號(信箱)"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:paddingLeft="17dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:id="@+id/username_icon2"
-                android:layout_width="14.7dp"
-                android:layout_height="20.3dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="17dp"
-                android:src="@drawable/email" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/erroraccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:layout_marginRight="62dp"
-            android:textColor="#f00" />
-        <!--passwd-->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="62dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="62dp"
-            android:background="@drawable/blue_border_rounded_cornwe">
-
-            <EditText
-                android:id="@+id/rpassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/icon"
-                android:background="@android:color/transparent"
-                android:hint="密碼"
-                android:inputType="textPassword"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:paddingLeft="17dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="17dp"
-                android:src="@drawable/password" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/errorpassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:layout_marginRight="62dp"
-            android:textColor="#f00" />
-
         <!--        hobby -->
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -212,6 +114,7 @@
             android:layout_marginLeft="62dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="62dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/blue_border_rounded_cornwe">
 
             <Button
@@ -224,17 +127,8 @@
                 android:maxLines="1" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/errorhobby"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:layout_marginRight="62dp"
-            android:textColor="#f00" />
-
-        <!--Summit-->
         <Button
-            android:id="@+id/userregister"
+            android:id="@+id/btn_reInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -247,9 +141,12 @@
             android:gravity="center"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:text="註冊"
+            android:text="更改資訊"
             android:textColor="#000"
             android:textSize="14sp" />
 
+
     </LinearLayout>
+
+
 </RelativeLayout>

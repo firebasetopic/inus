@@ -18,6 +18,7 @@ import com.example.inus.Activity.Setting.setting;
 import com.example.inus.R;
 import com.example.inus.adapter.cartAdapter;
 import com.example.inus.model.docobject;
+import com.example.inus.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -55,11 +56,13 @@ public class Cart_screen extends AppCompatActivity {
         seller =findViewById(R.id.seller);
         recyclerView =findViewById(R.id.recyclerView);
 
+        setListener();
+
         mAuth = FirebaseAuth.getInstance();
         String Uid =mAuth.getCurrentUser().getUid();
         buyer.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
         seller.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
-        db.collection("user")
+        db.collection(Constants.KEY_COLLECTION_USERS)//抓取資料將名子存起來
                 .document(Uid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -79,8 +82,9 @@ public class Cart_screen extends AppCompatActivity {
                     }
                 });
         ArrayList<String> buy = new ArrayList<>();
+        ArrayList<String>buyid = new ArrayList<>();
         Tpye=0;
-        db.collection("user/"+Uid+"/buy")
+        db.collection(Constants.KEY_COLLECTION_USERS + "/" +Uid+"/buy")//抓取buy資料裝到buy、buyid陣列並傳到cartAdapter
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -89,28 +93,24 @@ public class Cart_screen extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {
                                 docobject b = doc.toObject(docobject.class);
                                 buy.add(b.title);
-                                cartAdapter= new cartAdapter(Cart_screen.this,buy,Tpye);
+                                buyid.add(doc.getId());
+                                cartAdapter= new cartAdapter(Cart_screen.this,buy,buyid,Tpye);
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(Cart_screen.this));
                             recyclerView.setAdapter(cartAdapter);
                         }
                     }
                 });
-        rigthicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), setting.class));
-                overridePendingTransition(0,0);
-            }
-        });
+
         buyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buyer.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
-                seller.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
+                buyer.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));//當我按下上方按鈕後將顏色改變
+                seller.setBackground(getResources().getDrawable(R.drawable.select_btn_color));//當我按下上方按鈕後將顏色改變
                 Tpye=0;
                 ArrayList<String> buy = new ArrayList<>();
-                db.collection("user/"+Uid+"/buy")
+                ArrayList<String>buyid = new ArrayList<>();
+                db.collection( Constants.KEY_COLLECTION_USERS + "/"+Uid+"/buy")//抓取buy資料裝到buy、buyid陣列並傳到cartAdapter
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -118,8 +118,9 @@ public class Cart_screen extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
                                         docobject b = doc.toObject(docobject.class);
+                                        buyid.add(doc.getId());
                                         buy.add(b.title);
-                                        cartAdapter= new cartAdapter(Cart_screen.this,buy,Tpye);
+                                        cartAdapter= new cartAdapter(Cart_screen.this,buy,buyid,Tpye);
                                     }
                                     recyclerView.setLayoutManager(new LinearLayoutManager(Cart_screen.this));
                                     recyclerView.setAdapter(cartAdapter);
@@ -131,11 +132,12 @@ public class Cart_screen extends AppCompatActivity {
         seller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                seller.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
-                buyer.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
+                seller.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));//當我按下上方按鈕後將顏色改變
+                buyer.setBackground(getResources().getDrawable(R.drawable.select_btn_color));//當我按下上方按鈕後將顏色改變
                 Tpye=1;
                 ArrayList<String> buy = new ArrayList<>();
-                db.collection("user/"+Uid+"/sell")
+                ArrayList<String>buyid = new ArrayList<>();
+                db.collection( Constants.KEY_COLLECTION_USERS + "/"+Uid+"/sell")//抓取sell資料裝到buy、buyid陣列並傳到cartAdapter
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -144,7 +146,8 @@ public class Cart_screen extends AppCompatActivity {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
                                         docobject b = doc.toObject(docobject.class);
                                         buy.add(b.title);
-                                        cartAdapter= new cartAdapter(Cart_screen.this,buy,Tpye);
+                                        buyid.add(doc.getId());
+                                        cartAdapter= new cartAdapter(Cart_screen.this,buy,buyid,Tpye);
                                     }
                                     recyclerView.setLayoutManager(new LinearLayoutManager(Cart_screen.this));
                                     recyclerView.setAdapter(cartAdapter);
@@ -154,7 +157,19 @@ public class Cart_screen extends AppCompatActivity {
             }
         });
         navigation.setSelectedItemId(R.id.cart);//選到cart按鈕改變顏色
-        navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+
+    }
+
+    private void setListener(){
+        rigthicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), setting.class));//點選右上角設定轉跳至設定畫面
+                overridePendingTransition(0,0);
+            }
+        });
+
+        navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {//下方導覽列
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
@@ -183,4 +198,7 @@ public class Cart_screen extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

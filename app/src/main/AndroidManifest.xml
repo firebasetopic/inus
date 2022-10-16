@@ -11,6 +11,9 @@
         android:theme="@style/Theme.揪inus"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.Setting.personal_info"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Setting.AddToFriends"
             android:exported="false" />
         <activity
@@ -24,10 +27,10 @@
             android:name=".Activity.addEvent._finishEvent"
             android:exported="false" />
         <activity
-            android:name=".Activity.addEvent._timePicker"
+            android:name=".Activity.addEvent._PickerTime"
             android:exported="false" />
         <activity
-            android:name=".Activity.addEvent._pickerfriends"
+            android:name=".Activity.addEvent._PickerFriends"
             android:exported="false" />
         <activity
             android:name=".Activity.addEvent._group"

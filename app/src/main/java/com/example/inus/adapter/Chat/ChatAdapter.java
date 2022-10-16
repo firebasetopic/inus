@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.inus.databinding.ItemContainerReceivedMessageBinding;
 import com.example.inus.databinding.ItemContainerSentMessageBinding;
 import com.example.inus.model.ChatMessage;

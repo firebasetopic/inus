@@ -43,7 +43,7 @@
                 android:layout_height="99dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/blue_border_rounded_cornwe"
+                app:srcCompat="@drawable/blue_border_rounded_cornwe"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,8 +71,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint=""
-                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingLeft="17dp"
                     android:paddingTop="15dp"

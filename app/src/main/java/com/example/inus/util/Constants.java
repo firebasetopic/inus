@@ -1,5 +1,8 @@
 package com.example.inus.util;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 
@@ -14,6 +17,7 @@ public class Constants {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_FCM_TOKEN = "femToken";
     public static final String KEY_USER = "user";
+    public static final String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     //Event
     public static final String KEY_EVENT_TITLE = "title";
     public static final String KEY_EVENT_START_TIME = "startTime";
@@ -27,7 +31,11 @@ public class Constants {
     public static final String KEY_COLLECTION_END_EVENT = "EResult";
     public static final String KEY_COLLECTION_START_TINE = "SResultTime";
     public static final String KEY_COLLECTION_END_TIME = "EResultTime";
-    public static final String KEY_FRIENDS = "friends";
+    public static final String KEY_EVENT_STATE = "state";
+    public static final String KEY_ISGROUPGBUY = "isGroupBuy";
+    public static final SimpleDateFormat SDFDateTime = new SimpleDateFormat("yyyy/MM/dd HH:mm");   //設定日期格式
+    public static final SimpleDateFormat SDFDay = new SimpleDateFormat("yyyy-MM-dd");
+
     //To show the event of selected day
     public static final LocalDate today = LocalDate.now();
     public static String selectDay = "" + today;
@@ -44,7 +52,7 @@ public class Constants {
     public static final String KEY_SENDER_IMAGE = "senderImage";
     public static final String KEY_RECEIVER_IMAGE = "receiverImage";
     public static final String KEY_LAST_MESSAGE = "lastMessage";
-    //Login highlight
+    //online highlight
     public static final String KEY_AVAILABILITY = "availability";
     //Notifications
     public static final String REMOTE_MSG_AUTHORIZATION = "Authorization";

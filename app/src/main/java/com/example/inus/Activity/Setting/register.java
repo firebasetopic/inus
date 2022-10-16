@@ -18,7 +18,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class register extends AppCompatActivity {
-/*2 button 4 textview and errorTextView */
+
     private String[] hobby1 ={"美妝保養","教育學習","居家婦幼","醫療保健","視聽娛樂","流行服飾","旅遊休閒","3C娛樂","人氣美食"};
     private boolean[] hobbyInChecked={false,false,false,false,false,false,false,false,false};
     private FirebaseAuth mAuth;

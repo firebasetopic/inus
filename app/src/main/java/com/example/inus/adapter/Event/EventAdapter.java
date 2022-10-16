@@ -1,7 +1,6 @@
 package com.example.inus.adapter.Event;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +27,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         Event event = getItem(position);
         SimpleDateFormat SDF = new SimpleDateFormat("HH:mm");
-
-        Log.d("demoEve", "" + event);
-        Log.d("demoP", "" + position);
-        Log.d("demo", "" );
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_container_event,parent,false);

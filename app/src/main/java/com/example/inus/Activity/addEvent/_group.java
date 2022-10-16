@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.inus.Activity.Setting.BaseActivity;
 import com.example.inus.databinding.ActivityGroupBinding;
 import com.example.inus.util.Constants;
@@ -22,17 +20,30 @@ public class _group extends BaseActivity {
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
 
+        //是否團購
+        binding.switchGroupbuy.setOnClickListener(view -> {
+            if(binding.switchGroupbuy.isChecked()){
+                preferenceManager.putBoolean(Constants.KEY_ISGROUPGBUY,true);
+                showToast("" + preferenceManager.getBoolean(Constants.KEY_ISGROUPGBUY));
+            }
+            else{
+                preferenceManager.putBoolean(Constants.KEY_ISGROUPGBUY,false);
+            }
+        });
+
         binding.button.setOnClickListener(view -> finish());
         binding.button5.setOnClickListener(view -> {
+            // 將輸入的資料寫進 sharedpreferences
             preferenceManager.putString(Constants.KEY_EVENT_TITLE,binding.edtext1.getText().toString());
             preferenceManager.putString(Constants.KEY_EVENT_LOCATION,binding.edtext2.getText().toString());
             preferenceManager.putString(Constants.KEY_EVENT_DESCRIPTION,binding.edtext2.getText().toString());
             if(isVaildInput()){
-                startActivity(new Intent(this,_pickerfriends.class));
+                startActivity(new Intent(this, _PickerFriends.class));
             }
         });
     }
 
+    // 判斷輸入值是否符合規定
     private boolean isVaildInput() {
         if(binding.edtext1.getText().toString().isEmpty()){
             showToast("請輸入標題");

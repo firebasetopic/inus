@@ -3,22 +3,21 @@ package com.example.inus.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.inus.Activity.Setting.setting;
 import com.example.inus.R;
-import com.example.inus.adapter.noneAdapter;
+import com.example.inus.adapter.NotificationAdapter;
+import com.example.inus.databinding.ActivityNotificationScreenBinding;
+import com.example.inus.model.Event;
 import com.example.inus.model.docobject;
+import com.example.inus.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,134 +27,96 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class Notification_screen extends AppCompatActivity {
-    private BottomNavigationView navigation;
-    private com.example.inus.adapter.noneAdapter noneAdapter;
-    private Button group,groupbuy;
-    private ImageView rigthicon;
-    private RecyclerView recyclerView;
-    private FirebaseAuth mAuth;
+    private NotificationAdapter notificationAdapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    int Tpye;
+    private ActivityNotificationScreenBinding binding;
+    private boolean isGroupBuy =false;
+    ArrayList<String> events = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification_screen);
+        binding = ActivityNotificationScreenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        init();
+        setListener();
+        setBtnBackground(getCurrentFocus());//預設按鈕顏色
+        getEvent(getCurrentFocus());//裝資料庫內的通知
+    }
+
+    private void init(){
         getSupportActionBar().hide();//隱藏上方導覽列
         getWindow().setStatusBarColor(this.getResources().getColor(R.color.black));//狀態列顏色
-        navigation= findViewById(R.id.navigation);
-        group = findViewById(R.id.group);
-        groupbuy =findViewById(R.id.groupbuy);
-        recyclerView = findViewById(R.id.recyclerView);
-        rigthicon = findViewById(R.id.righticon);
-        mAuth = FirebaseAuth.getInstance();
-        String Uid = mAuth.getCurrentUser().getUid();
-        //預設按鈕顏色
-        group.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
-        groupbuy.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
-        //裝資料庫內的知通
-        ArrayList<String> glist = new ArrayList<>();
-        db.collection("user/"+Uid+"/group")
+    }
+
+    private  void setListener(){
+        binding.group.setOnClickListener(v -> {
+            setBtnBackground(v);
+            getEvent(v);
+        } );
+        binding.groupbuy.setOnClickListener(v -> {
+            setBtnBackground(v);
+            getEvent(v);
+        } );
+
+        binding.navigation.setSelectedItemId(R.id.none);//選到none按鈕改變顏色
+        binding.righticon.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), setting.class));
+            overridePendingTransition(0,0);
+        });
+        binding.navigation.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.home:
+                    startActivity(new Intent(getApplicationContext(),Home_screen.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.shop:
+                    startActivity(new Intent(getApplicationContext(),Shop_screen.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.cart:
+                    startActivity(new Intent(getApplicationContext(),Cart_screen.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.talk:
+                    startActivity(new Intent(getApplicationContext(),Talk_screen.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.none:
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    private void setBtnBackground(View v){
+        binding.group.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
+        binding.groupbuy.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
+        if(v == binding.groupbuy){
+            binding.groupbuy.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
+            binding.group.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
+        }
+    }
+
+    private void getEvent(View v){
+        String collectionPath = Constants.KEY_COLLECTION_USERS + "/" + Constants.UID +"/group";
+        if(v == binding.groupbuy){
+            isGroupBuy =true;
+            collectionPath = Constants.KEY_COLLECTION_USERS + "/" + Constants.UID +"/groupBuy";
+        }
+
+        db.collection(collectionPath)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot doc : task.getResult()) {
-                                docobject n = doc.toObject(docobject.class);
-                                glist.add(n.name);
-                                noneAdapter = new noneAdapter(Notification_screen.this,glist,Tpye);
-                            }
-                            recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
-                            recyclerView.setAdapter(noneAdapter);
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        events.clear();
+                        for(QueryDocumentSnapshot doc : task.getResult()){
+                            events.add(doc.getId());
                         }
+                        notificationAdapter = new NotificationAdapter(Notification_screen.this,events,isGroupBuy);
+                        binding.recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
+                        binding.recyclerView.setAdapter(notificationAdapter);
                     }
                 });
-        rigthicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), setting.class));
-                overridePendingTransition(0,0);
-            }
-        });
-        group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                group.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
-                groupbuy.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
-                Tpye=0;
-                ArrayList<String> glist = new ArrayList<>();
-                db.collection("user/"+Uid+"/group")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        docobject n = doc.toObject(docobject.class);
-                                        glist.add(n.name);
-                                        noneAdapter = new noneAdapter(Notification_screen.this,glist,Tpye);
-                                    }
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
-                                    recyclerView.setAdapter(noneAdapter);
-                                }
-                            }
-                        });
-            }
-        });
-        groupbuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                groupbuy.setBackground(getResources().getDrawable(R.drawable.theme2_fill__button_color));
-                group.setBackground(getResources().getDrawable(R.drawable.select_btn_color));
-                Tpye=1;
-                ArrayList<String> glist = new ArrayList<>();
-                db.collection("user/"+Uid+"/groupbuy")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        docobject n = doc.toObject(docobject.class);
-                                        glist.add(n.name);
-                                        noneAdapter = new noneAdapter(Notification_screen.this,glist,Tpye);
-                                    }
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(Notification_screen.this));
-                                    recyclerView.setAdapter(noneAdapter);
-                                }
-                            }
-                        });
-            }
-        });
-        navigation.setSelectedItemId(R.id.none);//選到none按鈕改變顏色
-        navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),Home_screen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.shop:
-                        startActivity(new Intent(getApplicationContext(),Shop_screen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.cart:
-                        startActivity(new Intent(getApplicationContext(),Cart_screen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.talk:
-                        startActivity(new Intent(getApplicationContext(),Talk_screen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.none:return true;
-                }
-                return false;
-            }
-        });
-//        Calendar c = Calendar.getInstance();
-//        String time = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(c.getTime());
-//        Log.d("Demo",time);
     }
+
 }

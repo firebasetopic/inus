@@ -2,15 +2,12 @@ package com.example.inus.adapter.Event;
 
 import android.app.TimePickerDialog;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.inus.R;
 import com.example.inus.databinding.ItemContainerTimepickerBinding;
 import com.example.inus.util.Constants;
 import com.example.inus.util.PreferenceManager;
@@ -50,7 +47,7 @@ public class Timeadapter extends  RecyclerView.Adapter<TimeVH>{
 
         holder.binding.textViewtime1.setOnClickListener(view -> {  // 點擊之後
             // 設定時間資料
-            String[] day = preferenceManager.getString(Constants.KEY_EVENT_START_DAY).split("/");
+            String[] day = preferenceManager.getString(Constants.KEY_EVENT_START_DAY).split("-");
             int year = Integer.parseInt(day[0]);
             int month = Integer.parseInt(day[1]);
             int sday = Integer.parseInt(day[2]);

@@ -36,16 +36,25 @@ tools:context=".Activity.addEvent._group">
 
         android:paddingTop="30dp" />
 
-<EditText
-    android:id="@+id/edtext3"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/edtext2"
-    android:layout_marginTop="0dp"
-    android:ems="10"
-    android:hint="備註(選填)"
-    android:inputType="text"
-    android:paddingTop="30dp" />
+    <EditText
+        android:id="@+id/edtext3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtext2"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="備註(選填)"
+        android:inputType="text"
+        android:paddingTop="30dp" />
+
+    <Switch
+        android:id="@+id/switch_groupbuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtext3"
+        android:layout_alignParentRight="true"
+        android:text="是否團購" />
+
 
     <Button
         android:id="@+id/button"
@@ -69,6 +78,8 @@ tools:context=".Activity.addEvent._group">
         android:layout_marginBottom="10dp"
         android:background="@drawable/select_btn_color"
         android:text="送出" />
+
+
 
 
 </RelativeLayout>

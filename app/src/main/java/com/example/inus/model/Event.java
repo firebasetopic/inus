@@ -1,14 +1,11 @@
 package com.example.inus.model;
 
-import android.util.Log;
+import com.example.inus.util.Constants;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Event {
-
-    public SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
     public static ArrayList<Event> eventList = new ArrayList<>();
 
     public static ArrayList<Event> eventForDate(String date){  // 收 date, return event of date
@@ -42,10 +39,6 @@ public class Event {
         this.endTime = endTime;
     }
 
-    public void addInfo(Event event, String location, String description){
-        this.location = location;
-        this.description = description;
-    }
 
     public String getTitle() {
         return title;
@@ -66,7 +59,7 @@ public class Event {
     }
 
     public String getDate() {
-        String date1 = SDF.format(startTime);
+        String date1 = Constants.SDFDay.format(startTime);
         return date1;
     }
 }

@@ -21,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.inus.R;
+import com.example.inus.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +44,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
     private StorageReference storageReference= FirebaseStorage.getInstance().getReference();
     private com.example.inus.adapter.postjoinAdapter postjoinAdapter;
     ArrayList<String> nameLiset,articleList,titlelist,endtimelist,id;
-//    ArrayList<Viewpageitem> viewpageitemArrayList;
+
     public shopAdapter(Context context,ArrayList<String>nameLiset,ArrayList<String>articleList,ArrayList<String>titlelist,ArrayList<String>endtimelist,ArrayList<String>id) {
         this.context = context;
         this.nameLiset=nameLiset;
@@ -51,14 +52,15 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
         this.titlelist=titlelist;
         this.endtimelist=endtimelist;
         this.id=id;
-
     }
+
     @NonNull
     @Override
     public shopAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.shop_post,parent,false);
         return new shopAdapter.MyViewHolder(v);
     }
+
     @Override
     public void onBindViewHolder(@NonNull shopAdapter.MyViewHolder holder, int position) {
         String posid = id.get(position);
@@ -66,6 +68,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
         holder.article.setText(articleList.get(position));
         holder.title.setText(titlelist.get(position));
         holder.time.setText(endtimelist.get(position));
+
         storageReference.child("post/"+posid).listAll()
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
                     @Override
@@ -75,9 +78,8 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            Log.d("Demo",uri.toString());
                                             ImageView imageView = new ImageView(context);
-                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800,500);
+                                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800,400);
                                             imageView.setLayoutParams(params);
                                             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                                             Glide.with(context)
@@ -95,53 +97,11 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
                         }
                     }
                 });
-//        int[] images = {R.drawable.none1,R.drawable.none};
-//        viewpageitemArrayList = new ArrayList<>();
-//        for(int i = 0;i<images.length;i++){
-//            Viewpageitem viewpageitem = new Viewpageitem(images[i]);
-//            viewpageitemArrayList.add(viewpageitem);
-//        }
-//        VpAdapter vpAdapter = new VpAdapter(viewpageitemArrayList);
-//        holder.viewPager2.setAdapter(vpAdapter);
-//        holder.viewPager2.setClipToPadding(false);
-//        holder.viewPager2.setClipChildren(false);
-//        holder.viewPager2.setOffscreenPageLimit(1);
-//        holder.viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-//        db.collection("user/"+mAuth.getUid()+"/cart")
-//                .document(posid)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                        if(task.isSuccessful()){
-//                            DocumentSnapshot documentSnapshot  = task.getResult();
-//                            String sure = documentSnapshot.getString("sure");
-//                            String sure1= new String(sure);
-//                            String num =new String("1");
-//                                if(sure1.contentEquals(num)==true){
-//                                    holder.button.setBackgroundResource(R.drawable.theme2_fill__button_color);
-//                                    holder.button.setText("已參加");
-//                                    holder.button.setTextColor(Color.RED);
-//                                }else {
-//                                    Log.d("Demo","1");
-//                                }
-//                        }
-//                    }
-//                });
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                HashMap<String,String> sure = new HashMap<>();
-//                sure.put("sure","0");
-//                db.collection("user/"+mAuth.getUid()+"/cart")
-//                        .document(posid)
-//                        .set(sure)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                            }
-//                        });
+
                 ArrayList<String> itemname = new ArrayList<>();
                 ArrayList<String> itemprice = new ArrayList<>();
                 joindialog = new Dialog(context);
@@ -180,12 +140,13 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
                                 Log.d("Demo",e.getMessage());
                             }
                         });
+
                 join_exit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         joindialog.cancel();
                         for(int i=0 ; i< itemname.size();i++){
-                            db.collection("user/"+mAuth.getUid()+"/cart/"+posid+"/"+itemname.get(i))
+                            db.collection( Constants.KEY_COLLECTION_USERS +"/"+mAuth.getUid()+"/cart/"+posid+"/"+itemname.get(i))
                                     .document("prices")
                                     .delete()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -194,7 +155,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
 
                                         }
                                     });
-                            db.collection("user/"+mAuth.getUid()+"/cart")
+                            db.collection(Constants.KEY_COLLECTION_USERS +"/" +mAuth.getUid()+"/cart")
                                     .document(posid)
                                     .delete()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -212,7 +173,7 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
                         joindialog.cancel();
                         HashMap<String,String> sure = new HashMap<>();
                         sure.put("title",titlelist.get(position));
-                        db.collection("user/"+mAuth.getUid()+"/cart")
+                        db.collection(Constants.KEY_COLLECTION_USERS +  "/"+mAuth.getUid()+"/cart")
                                 .document(posid)
                                 .set(sure)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -235,7 +196,6 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView name,title,article,time;
         Button button;
-        ViewPager2 viewPager2;
         LinearLayout linear;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -243,7 +203,6 @@ public class shopAdapter extends RecyclerView.Adapter<shopAdapter.MyViewHolder>{
             title = itemView.findViewById(R.id.title);
             article=itemView.findViewById(R.id.article);
             button= itemView.findViewById(R.id.button);
-//            viewPager2 = itemView.findViewById(R.id.viewpager);
             time = itemView.findViewById(R.id.time);
             linear = itemView.findViewById(R.id.linear);
         }

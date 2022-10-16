@@ -1,14 +1,12 @@
 package com.example.inus.Activity.addEvent;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -16,16 +14,11 @@ import android.widget.Toast;
 
 import com.example.inus.Activity.Home_screen;
 import com.example.inus.Activity.Setting.BaseActivity;
-import com.example.inus.R;
 import com.example.inus.databinding.ActivityAddEventBinding;
 import com.example.inus.util.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-import java.security.PrivateKey;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -35,8 +28,6 @@ public class _addEvent extends BaseActivity {
 
     private ActivityAddEventBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
-    private String UID;
     private Calendar calendar = Calendar.getInstance();
     private Date date, beforeDate;
     private boolean allday =false;
@@ -46,9 +37,6 @@ public class _addEvent extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding =ActivityAddEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        mAuth = FirebaseAuth.getInstance();
-        UID =mAuth.getCurrentUser().getUid();
         setListener();
 
     }
@@ -94,7 +82,6 @@ public class _addEvent extends BaseActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hourOfDay = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
-        SimpleDateFormat SDF = new SimpleDateFormat("yyyy/MM/dd HH:mm");   //設定日期格式
 
         new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -107,14 +94,14 @@ public class _addEvent extends BaseActivity {
                         date = calendar.getTime();
 
                         if(v == binding.textViewSt){
-                            binding.textViewSt.setText(SDF.format(date));
+                            binding.textViewSt.setText(Constants.SDFDateTime.format(date));
                             beforeDate = date;
                         }else{
                             if(date.before(beforeDate)){
                                 binding.textViewEt.setText("");
                                 showToast("結束時間不可早於開始時間");
                             }else {
-                                binding.textViewEt.setText(SDF.format(date));
+                                binding.textViewEt.setText(Constants.SDFDateTime.format(date));
                             }
                         }
                     }
@@ -157,6 +144,6 @@ public class _addEvent extends BaseActivity {
         data.put(Constants.KEY_EVENT_LOCATION,binding.editText.getText().toString());
         data.put(Constants.KEY_EVENT_DESCRIPTION, binding.editText2.getText().toString());
 
-        db.collection(Constants.KEY_COLLECTION_USERS + "/" + UID + "/event" ).document().set(data);
+        db.collection(Constants.KEY_COLLECTION_USERS + "/" + Constants.UID + "/event" ).document().set(data);
     }
 }
